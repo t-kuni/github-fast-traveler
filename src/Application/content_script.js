@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 hotkeys('ctrl+shift+f', function(event, handler){
-	event.preventDefault()
+	event.preventDefault();
 
 	const keyword = 'test';
 
