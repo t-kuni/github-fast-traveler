@@ -26,3 +26,18 @@ new Vue({
     render: h => h(App),
     store,
 }).$mount('#' + rootElemID);
+
+
+
+var data = { type: "embedded_script", text: "Hello from the webpage!" };
+window.postMessage(data, "*");
+
+
+window.addEventListener("message", function(event) {
+    if (event.source != window)
+        return;
+
+    if (event.data.type && (event.data.type == "content_script")) {
+        console.log('Listener in embedded_script');
+    }
+});

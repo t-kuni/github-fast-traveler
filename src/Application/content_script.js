@@ -25,3 +25,15 @@ scriptElem.onload = function() {
 	this.remove();
 };
 (document.head || document.documentElement).appendChild(scriptElem);
+
+
+window.addEventListener("message", function(event) {
+	if (event.source != window)
+		return;
+
+	if (event.data.type && (event.data.type == "embedded_script")) {
+		console.log('Listener in content_script');
+		var data = { type: "content_script", text: "Hello from the webpage!" };
+		window.postMessage(data, "*");
+	}
+});
