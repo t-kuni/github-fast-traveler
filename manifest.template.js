@@ -17,8 +17,11 @@ const baseManifest = {
 	{
       "matches": ["https://github.com/*"],
       "js": ["dist/content_script.js"],
-	  "run_at": "document_start"
+	  "run_at": "document_end"
 	}
+  ],
+  "web_accessible_resources": [
+    "dist/embedded_script.js"
   ],
   "permissions": [
   ]

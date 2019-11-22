@@ -1,3 +1,4 @@
+// import CodeFindModal from "../../resources/components/organisms/CodeFindModal";
 import hotkeys from 'hotkeys-js';
 
 // 受信
@@ -17,3 +18,10 @@ hotkeys('ctrl+shift+f', function(event, handler){
 
 	window.open(url);
 });
+
+const scriptElem = document.createElement('script');
+scriptElem.src = chrome.runtime.getURL('dist/embedded_script.js');
+scriptElem.onload = function() {
+	this.remove();
+};
+(document.head || document.documentElement).appendChild(scriptElem);
