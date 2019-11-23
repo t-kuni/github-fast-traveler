@@ -53,6 +53,14 @@
             this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
                 this.searchWord = window.getSelection().toString();
 
+                if (this.hasCurrentRepo) {
+                    this.searchType = 'current-repo';
+                } else if (this.hasCurrentUser) {
+                    this.searchType = 'current-user';
+                } else {
+                    this.searchType = 'all';
+                }
+
                 // FIXME not working
                 // this.$refs.searchWordInput.select();
             })
@@ -69,7 +77,7 @@
             return {
                 GETTERS,
                 searchWord: '',
-                searchType: 'first',
+                searchType: 'all',
             }
         },
         computed  : {
