@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import state from './state';
-import actions from './actions';
+import state, {STATE} from './state';
+import actions, {ACTION} from './actions';
 import mutations from './mutations';
-import getters from './getters';
+import getters, {GETTERS} from './getters';
 import App from '../../resources/components/App.vue';
 import BootstrapVue from 'bootstrap-vue';
 import '../../resources/scss/custom.scss';
@@ -35,12 +35,22 @@ hotkeys('ctrl+shift+f', function(event, handler){
     vm.$bvModal.show('code-find-modal');
 });
 
+hotkeys('ctrl+shift+p', function(event, handler){
+    event.preventDefault();
 
-// window.addEventListener("message", function(event) {
-//     if (event.source != window)
-//         return;
-//
-//     if (event.data.type && (event.data.type == "content_script")) {
-//         console.log('Listener in embedded_script');
-//     }
-// });
+    if (vm.$store.getters[GETTERS.CURRENT_USER] === null
+        || vm.$store.getters[GETTERS.CURRENT_REPO] === null)
+    {
+        return;
+    }
+
+    const user = vm.$store.getters[GETTERS.CURRENT_USER];
+    const repo = vm.$store.getters[GETTERS.CURRENT_REPO];
+    const branch = vm.$store.state[STATE.CURRENT_REPO_DETAIL].default_branch;
+    const url = `https://github.com/${user}/${repo}/find/${branch}`;
+    window.open(url);
+});
+
+if (vm.$store.getters[GETTERS.CURRENT_REPO] !== null) {
+    vm.$store.dispatch(ACTION.FETCH_REPO_DETAIL);
+}

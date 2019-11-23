@@ -23,8 +23,6 @@ export default {
         const path  = location.pathname;
         const match = path.match(/^\/(?<user_name>[^/]+)/);
 
-        console.log(match);
-
         if (match === null) {
             return null;
         }
@@ -34,8 +32,6 @@ export default {
     [GETTERS.CURRENT_REPO]  : (state) => {
         const path  = location.pathname;
         const match = path.match(/^\/[^/]+\/(?<repo_name>[^/]+)/);
-
-        console.log(match);
 
         if (match === null) {
             return null;
