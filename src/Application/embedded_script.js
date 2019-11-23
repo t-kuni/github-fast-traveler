@@ -5,10 +5,11 @@ import actions from './actions';
 import mutations from './mutations';
 import getters from './getters';
 import App from '../../resources/components/App.vue';
-
-Vue.component('app', App);
+import BootstrapVue from 'bootstrap-vue';
+import '../../resources/scss/custom.scss';
 
 Vue.use(Vuex);
+Vue.use(BootstrapVue);
 
 const store = new Vuex.Store({
     state,

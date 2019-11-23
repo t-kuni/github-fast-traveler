@@ -26,6 +26,8 @@
   "homepage": "https://github.com/t-kuni/chrome-extension-skeleton#readme",
   "dependencies": {},
   "devDependencies": {
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.1.0",
     "copy-webpack-plugin": "^5.0.5",
     "css-loader": "^3.2.0",
     "hotkeys-js": "^3.7.2",
