@@ -1,5 +1,9 @@
 <template>
-    <div>test component</div>
+    <div>
+        <b-modal id="code-find-modal" :static="true" centered title="Find Code">
+            <p class="my-4">Vertically centered modal!</p>
+        </b-modal>
+    </div>
 </template>
 
 <script>
@@ -24,7 +28,4 @@
 </script>
 
 <style lang="scss" scoped>
-    div {
-        color: red;
-    }
 </style>

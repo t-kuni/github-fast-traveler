@@ -1,21 +1,19 @@
 <template>
     <div class="chrome-extension-github-fast-traveler">
         <div>
-            <b-button v-b-modal.modal-center>Launch centered modal</b-button>
-
-            <b-modal id="modal-center" static="true" centered title="BootstrapVue">
-                <p class="my-4">Vertically centered modal!</p>
-            </b-modal>
+            <code-find-modal></code-find-modal>
         </div>
     </div>
 </template>
 
 <script>
+    import CodeFindModal from "./organisms/CodeFindModal.vue";
+
     export default {
         mounted() {
             console.log('mounted !!!!');
         },
-        components: {},
+        components: {CodeFindModal},
         mounted() {
         },
         props     : {
