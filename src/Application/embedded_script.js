@@ -33,14 +33,6 @@ hotkeys('ctrl+shift+f', function(event, handler){
     event.preventDefault();
 
     vm.$bvModal.show('code-find-modal');
-
-    // const keyword = 'test';
-    //
-    // const path = location.pathname;
-    //
-    // const url = 'https://github.com/search?q=' + keyword + '&type=Code';
-    //
-    // window.open(url);
 });
 
 
