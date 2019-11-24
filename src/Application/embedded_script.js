@@ -5,7 +5,7 @@ import BootstrapVue from 'bootstrap-vue';
 import '../../resources/scss/custom.scss';
 import hotkeys from 'hotkeys-js';
 import {container} from "tsyringe";
-import store from './store';
+import {setupStore} from './store';
 
 Vue.use(BootstrapVue);
 
@@ -16,7 +16,7 @@ document.body.appendChild(rootElem);
 
 const vm = new Vue({
     render: h => h(App),
-    store,
+    state: setupStore(),
 }).$mount('#' + rootElemID);
 
 hotkeys('ctrl+shift+f', function(event, handler){

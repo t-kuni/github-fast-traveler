@@ -1,5 +1,7 @@
 import "../../../../src/Application/setup-container";
 import {container} from "tsyringe";
+import {STATE} from "../../../../src/Application/state";
+import {setupStore} from "../../../../src/Application/store";
 
 const assert = require('assert');
 
@@ -32,6 +34,19 @@ describe('FileFindingInteractor#find', () => {
                 }
             }
         });
+        container.register('StateProvider', {
+            useValue: {
+                provide() {
+                    return {
+                        [STATE.CURRENT_REPO_DETAIL]: {
+                            default_branch: 'test-branch'
+                        }
+                    }
+                }
+            }
+        });
+
+        const store = setupStore();
 
         /*
          * Run

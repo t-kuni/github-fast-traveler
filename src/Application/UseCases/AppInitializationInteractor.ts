@@ -1,7 +1,6 @@
 import {inject, injectable} from "tsyringe";
 import {PageContextDetector} from "../Services/PageContextDetector";
 import {IGithubApiAdapter} from "../../Infrastructure/Adapters/interfaces/IGithubApiAdapter";
-import store from "../store";
 import {MUTATION} from "../mutations";
 
 @injectable()
@@ -11,7 +10,9 @@ export class AppInitializationInteractor {
     private apiAdapter: IGithubApiAdapter;
 
     constructor(@inject('PageContextDetector') pageContext: PageContextDetector,
-                @inject('IGithubApiAdapter') apiAdapter: IGithubApiAdapter) {
+                @inject('IGithubApiAdapter') apiAdapter: IGithubApiAdapter,
+                @inject('Store') store: any) {
+        this.store = store;
         this.apiAdapter = apiAdapter;
         this.pageContext = pageContext;
     }
@@ -23,7 +24,7 @@ export class AppInitializationInteractor {
 
             const detail = await this.apiAdapter.fetchRepoDetail(user, repo);
 
-            store.commit(MUTATION.SET_CURRENT_REPO_DETAIL, {
+            this.store.commit(MUTATION.SET_CURRENT_REPO_DETAIL, {
                 repoDetail  : detail,
             });
         }

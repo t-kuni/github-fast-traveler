@@ -1,7 +1,7 @@
 import "../../../../src/Application/setup-container";
 import {container} from "tsyringe";
-import store from "../../../../src/Application/store";
 import {STATE} from "../../../../src/Application/state";
+import {setupStore} from "../../../../src/Application/store";
 
 const assert = require('assert');
 
@@ -26,6 +26,8 @@ describe('AppInitializationInteractor#initialize', () => {
                 }
             }
         });
+
+        const store = setupStore();
 
         /*
          * Run
