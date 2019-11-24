@@ -1,4 +1,3 @@
-const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
@@ -19,8 +18,16 @@ module.exports = env => {
                 {
                     test: /\.scss$/,
                     loader: ['style-loader', 'css-loader', 'sass-loader']
-                }
+                },
+                {
+                    test: /\.tsx?$/,
+                    use: 'ts-loader',
+                    exclude: /node_modules/,
+                },
             ]
+        },
+        resolve: {
+            extensions: [ '.tsx', '.ts', '.js', '.vue' ],
         },
         plugins: [
             new CopyPlugin([

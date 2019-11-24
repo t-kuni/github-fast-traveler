@@ -1,23 +1,13 @@
+import './setup-container';
 import Vue from 'vue';
-import Vuex from 'vuex';
-import state, {STATE} from './state';
-import actions, {ACTION} from './actions';
-import mutations from './mutations';
-import getters, {GETTERS} from './getters';
 import App from '../../resources/components/App.vue';
 import BootstrapVue from 'bootstrap-vue';
 import '../../resources/scss/custom.scss';
 import hotkeys from 'hotkeys-js';
+import {container} from "tsyringe";
+import store from './store';
 
-Vue.use(Vuex);
 Vue.use(BootstrapVue);
-
-const store = new Vuex.Store({
-    state,
-    actions,
-    mutations,
-    getters,
-});
 
 const rootElemID = 'chrome-extension-github-fast-traveler';
 const rootElem = document.createElement("div");
@@ -38,19 +28,9 @@ hotkeys('ctrl+shift+f', function(event, handler){
 hotkeys('ctrl+shift+p', function(event, handler){
     event.preventDefault();
 
-    if (vm.$store.getters[GETTERS.CURRENT_USER] === null
-        || vm.$store.getters[GETTERS.CURRENT_REPO] === null)
-    {
-        return;
-    }
-
-    const user = vm.$store.getters[GETTERS.CURRENT_USER];
-    const repo = vm.$store.getters[GETTERS.CURRENT_REPO];
-    const branch = vm.$store.state[STATE.CURRENT_REPO_DETAIL].default_branch;
-    const url = `https://github.com/${user}/${repo}/find/${branch}`;
-    window.open(url);
+    const interactor = container.resolve('FileFindingInteractor');
+    interactor.find();
 });
 
-if (vm.$store.getters[GETTERS.CURRENT_REPO] !== null) {
-    vm.$store.dispatch(ACTION.FETCH_REPO_DETAIL);
-}
+const interactor = container.resolve('AppInitializationInteractor');
+interactor.initialize();

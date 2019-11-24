@@ -9,17 +9,17 @@
                     <b-form-radio value="all">
                         All Repositories
                     </b-form-radio>
-                    <b-form-radio value="current-user" v-if="hasCurrentUser">
+                    <b-form-radio value="current-user" v-if="pageContext.hasRepoOwnerName()">
                         Current User
-                        <b-form-input :value="currentUser" readonly></b-form-input>
+                        <b-form-input :value="pageContext.getRepoOwnerName()" readonly></b-form-input>
                     </b-form-radio>
-                    <b-form-radio value="current-repo" v-if="hasCurrentRepo">
+                    <b-form-radio value="current-repo" v-if="pageContext.hasRepoName()">
                         Current Repository
-                        <b-form-input :value="currentRepo" readonly></b-form-input>
+                        <b-form-input :value="pageContext.getRepoName()" readonly></b-form-input>
                     </b-form-radio>
-                    <b-form-radio value="my-repo" v-if="hasLoginUser">
+                    <b-form-radio value="my-repo" v-if="pageContext.hasLoginName()">
                         My Repositories
-                        <b-form-input :value="loginUser" readonly></b-form-input>
+                        <b-form-input :value="pageContext.getLoginName()" readonly></b-form-input>
                     </b-form-radio>
                 </b-form-radio-group>
             </b-form-group>
@@ -46,16 +46,17 @@
 
 <script>
     import {GETTERS} from "../../../src/Application/getters";
+    import {container} from 'tsyringe';
 
     export default {
         components: {},
         mounted() {
             this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
-                this.searchWord = window.getSelection().toString();
+                this.searchWord = this.pageContext.getSelectingText();
 
-                if (this.hasCurrentRepo) {
+                if (this.pageContext.hasRepoName()) {
                     this.searchType = 'current-repo';
-                } else if (this.hasCurrentUser) {
+                } else if (this.pageContext.hasRepoOwnerName()) {
                     this.searchType = 'current-user';
                 } else {
                     this.searchType = 'all';
@@ -66,12 +67,6 @@
             })
         },
         props     : {
-            // 'count': {
-            //     type: Number,
-            // },
-            // 'active': {
-            //     type: Boolean,
-            // }
         },
         data      : function () {
             return {
@@ -81,67 +76,16 @@
             }
         },
         computed  : {
-            hasCurrentUser() {
-                return this.$store.getters[GETTERS.CURRENT_USER] !== null;
+            pageContext() {
+                return container.resolve('PageContextDetector');
             },
-            currentUser() {
-                return this.$store.getters[GETTERS.CURRENT_USER];
-            },
-            hasCurrentRepo() {
-                return this.$store.getters[GETTERS.CURRENT_REPO] !== null;
-            },
-            currentRepo() {
-                return this.$store.getters[GETTERS.CURRENT_REPO];
-            },
-            hasLoginUser() {
-                return this.$store.getters[GETTERS.LOGIN_USER] !== null;
-            },
-            loginUser() {
-                return this.$store.getters[GETTERS.LOGIN_USER];
+            codeFindingInteractor() {
+                return container.resolve('CodeFindingInteractor');
             },
         },
         methods   : {
             onClickFind() {
-                switch (this.searchType) {
-                    case 'all':
-                        window.open(this.buildUrlInAll());
-                        break;
-                    case 'current-user':
-                        window.open(this.buildUrlInCurrentUser());
-                        break;
-                    case 'current-repo':
-                        window.open(this.buildUrlInCurrentRepo());
-                        break;
-                    case 'my-repo':
-                        window.open(this.buildUrlInMyRepo());
-                        break;
-                }
-            },
-            buildUrl(query) {
-                return 'https://github.com/search?q=' + query + '&type=Code';
-            },
-            buildUrlInAll() {
-                const query = this.searchWord;
-                return this.buildUrl(query);
-            },
-            buildUrlInCurrentUser() {
-                const user = this.currentUser;
-                const word = this.searchWord;
-                const query = `user:${user} ${word}`;
-                return this.buildUrl(query);
-            },
-            buildUrlInCurrentRepo() {
-                const user = this.currentUser;
-                const repo = this.currentRepo;
-                const word = this.searchWord;
-                const query = `repo:${user}/${repo} ${word}`;
-                return this.buildUrl(query);
-            },
-            buildUrlInMyRepo() {
-                const user = this.loginUser;
-                const word = this.searchWord;
-                const query = `user:${user} ${word}`;
-                return this.buildUrl(query);
+                this.codeFindingInteractor.find(this.searchType, this.searchWord);
             },
         }
     }

@@ -1,3 +1,5 @@
+import './setup-container';
+
 import $ from 'jquery';
 
 function getCurrentTabUrl(callback) {
