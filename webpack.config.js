@@ -21,7 +21,12 @@ module.exports = env => {
                 },
                 {
                     test: /\.tsx?$/,
-                    use: 'ts-loader',
+                    use: {
+                        loader: 'ts-loader',
+                        options: {
+                            happyPackMode: true // IMPORTANT! use happyPackMode mode to speed-up compilation and reduce errors reported to webpack
+                        }
+                    },
                     exclude: /node_modules/,
                 },
             ]
