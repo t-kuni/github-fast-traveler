@@ -54,4 +54,11 @@ export class PageContextDetector {
     getSelectingText() {
         return this.domAdapter.getSelectingText();
     }
+
+    isFileFindPage() {
+        const path = this.urlRepo.getPath();
+        const match = path.match(/^\/[^/]+\/[^/]+\/find\/.+$/);
+
+        return match !== null;
+    }
 }

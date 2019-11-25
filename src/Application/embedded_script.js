@@ -7,6 +7,9 @@ import hotkeys from 'hotkeys-js';
 import {container} from "tsyringe";
 import {setupStore} from './store';
 
+//
+// View Setup
+//
 Vue.use(BootstrapVue);
 
 const rootElemID = 'chrome-extension-github-fast-traveler';
@@ -19,6 +22,15 @@ const vm = new Vue({
     state: setupStore(),
 }).$mount('#' + rootElemID);
 
+//
+// Application Setup
+//
+const interactor = container.resolve('AppInitializationInteractor');
+interactor.initialize();
+
+//
+// Event Listener Setup
+//
 hotkeys('ctrl+shift+f', function(event, handler){
     event.preventDefault();
 
@@ -32,5 +44,11 @@ hotkeys('ctrl+shift+p', function(event, handler){
     interactor.find();
 });
 
-const interactor = container.resolve('AppInitializationInteractor');
-interactor.initialize();
+//
+// Logic Par Page
+//
+const pageContext = container.resolve('PageContextDetector');
+if (pageContext.isFileFindPage()) {
+    const interactor = container.resolve('FileFindPageOpeningInteractor');
+    interactor.onOpen();
+}
