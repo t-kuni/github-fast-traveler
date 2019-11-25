@@ -9,10 +9,12 @@ import {FileFindingInteractor} from "./UseCases/FileFindingInteractor";
 import {GithubApiAdapter} from "../Infrastructure/Adapters/GithubApiAdapter";
 import {AppInitializationInteractor} from "./UseCases/AppInitializationInteractor";
 import {StateProvider} from "./Services/StateProvider";
+import {FileFindPageOpeningInteractor} from "./UseCases/FileFindPageOpeningInteractor";
 
 // Application Layer
 container.register("CodeFindingInteractor", {useClass: CodeFindingInteractor});
 container.register("FileFindingInteractor", {useClass: FileFindingInteractor});
+container.register("FileFindPageOpeningInteractor", {useClass: FileFindPageOpeningInteractor});
 container.register("PageContextDetector", {useClass: PageContextDetector});
 container.register("AppInitializationInteractor", {useClass: AppInitializationInteractor});
 container.register("StateProvider", {useClass: StateProvider});

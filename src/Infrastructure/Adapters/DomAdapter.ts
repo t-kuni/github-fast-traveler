@@ -15,4 +15,14 @@ export class DomAdapter implements IDomAdapter {
     getSelectingText(): string {
         return window.getSelection().toString();
     }
+
+    setFileNameInFileFindPage(fileName:string) : void {
+        const input = $('input[name="query"]');
+        input.val(fileName);
+
+        setTimeout(() => {
+            input.change().keyup().keydown();
+            input.trigger('keydown');
+        }, 4000);
+    }
 }
