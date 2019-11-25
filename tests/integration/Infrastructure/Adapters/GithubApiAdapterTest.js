@@ -1,10 +1,12 @@
 import "../../../../src/Application/setup-container";
 import {container} from "tsyringe";
-import {STATE} from "../../../../src/Application/state";
-import {setupStore} from "../../../../src/Application/store";
 
 const assert = require('assert');
 
+/*
+ * This test is not work, i don't know why but because axios' adapter is set to undefined.
+ * I suspicious to had happen anything in axios' getDefaultAdapter function.
+ */
 describe('GithubApiAdapter#fetchRepoDetail', () => {
     it('fetchRepoDetail', async () => {
         /*
