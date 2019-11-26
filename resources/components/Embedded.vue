@@ -11,7 +11,6 @@
 
     export default {
         mounted() {
-            console.log('mounted !!!!');
         },
         components: {CodeFindModal},
         mounted() {
@@ -27,5 +26,4 @@
 </script>
 
 <style lang="scss" scoped>
-    /*@import '../../resources/scss/custom';*/
 </style>

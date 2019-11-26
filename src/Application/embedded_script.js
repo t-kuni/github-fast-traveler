@@ -1,8 +1,8 @@
 import './setup-container';
 import Vue from 'vue';
-import App from '../../resources/components/App.vue';
+import Embedded from '../../resources/components/Embedded';
 import BootstrapVue from 'bootstrap-vue';
-import '../../resources/scss/custom.scss';
+import '../../resources/scss/embedded.scss';
 import hotkeys from 'hotkeys-js';
 import {container} from "tsyringe";
 import {setupStore} from './store';
@@ -18,7 +18,7 @@ rootElem.setAttribute('id', rootElemID);
 document.body.appendChild(rootElem);
 
 const vm = new Vue({
-    render: h => h(App),
+    render: h => h(Embedded),
     state: setupStore(),
 }).$mount('#' + rootElemID);
 

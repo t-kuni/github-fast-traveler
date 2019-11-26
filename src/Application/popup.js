@@ -1,6 +1,12 @@
 import './setup-container';
+import Vue from 'vue';
+import Popup from '../../resources/components/Popup';
+import BootstrapVue from 'bootstrap-vue';
+import '../../resources/scss/popup.scss';
+import {container} from "tsyringe";
+import Hotkeys from "../Domain/ValueObjects/Hotkeys";
 
-import $ from 'jquery';
+Vue.use(BootstrapVue);
 
 function getCurrentTabUrl(callback) {
   // Query filter to be passed to chrome.tabs.query - see
@@ -44,13 +50,17 @@ function getCurrentTabUrl(callback) {
 document.addEventListener('DOMContentLoaded', () => {
 
 	getCurrentTabUrl((url) => {
-		const $textarea = $('#text-area');
-		const $button = $('#hello-button');
-
-		$textarea.text('Hello world from Javascript');
-		$button.click(onClickHelloWorld);
+        new Vue({
+            render: h => h(Popup),
+        }).$mount('#popup-root');
 	});
 });
+
+const hotkeyRepo = container.resolve('IHotkeyRepository');
+if (!hotkeyRepo.has()) {
+    const hotkey = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
+    hotkeyRepo.save(hotkey);
+}
 
 function onClickHelloWorld()
 {
