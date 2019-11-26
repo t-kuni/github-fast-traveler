@@ -1,4 +1,10 @@
 import './setup-container';
+import Vue from 'vue';
+import Popup from '../../resources/components/Popup';
+import BootstrapVue from 'bootstrap-vue';
+import '../../resources/scss/popup.scss';
+
+Vue.use(BootstrapVue);
 
 import $ from 'jquery';
 
@@ -44,11 +50,9 @@ function getCurrentTabUrl(callback) {
 document.addEventListener('DOMContentLoaded', () => {
 
 	getCurrentTabUrl((url) => {
-		const $textarea = $('#text-area');
-		const $button = $('#hello-button');
-
-		$textarea.text('Hello world from Javascript');
-		$button.click(onClickHelloWorld);
+        new Vue({
+            render: h => h(Popup),
+        }).$mount('#popup-root');
 	});
 });
 
