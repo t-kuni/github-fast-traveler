@@ -3,10 +3,10 @@ import Vue from 'vue';
 import Popup from '../../resources/components/Popup';
 import BootstrapVue from 'bootstrap-vue';
 import '../../resources/scss/popup.scss';
+import {container} from "tsyringe";
+import Hotkeys from "../Domain/ValueObjects/Hotkeys";
 
 Vue.use(BootstrapVue);
-
-import $ from 'jquery';
 
 function getCurrentTabUrl(callback) {
   // Query filter to be passed to chrome.tabs.query - see
@@ -55,6 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }).$mount('#popup-root');
 	});
 });
+
+const hotkeyRepo = container.resolve('IHotkeyRepository');
+if (!hotkeyRepo.has()) {
+    const hotkey = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
+    hotkeyRepo.save(hotkey);
+}
 
 function onClickHelloWorld()
 {
