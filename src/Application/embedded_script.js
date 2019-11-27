@@ -28,16 +28,19 @@ const vm = new Vue({
 const interactor = container.resolve('AppInitializationInteractor');
 interactor.initialize();
 
+const hotkeyRepo = container.resolve('IHotkeyRepository');
+const hotkeyData = hotkeyRepo.get();
+
 //
 // Event Listener Setup
 //
-hotkeys('ctrl+shift+f', function(event, handler){
+hotkeys(hotkeyData.findCodeKeys, function(event, handler){
     event.preventDefault();
 
     vm.$bvModal.show('code-find-modal');
 });
 
-hotkeys('ctrl+shift+p', function(event, handler){
+hotkeys(hotkeyData.findFileKeys, function(event, handler){
     event.preventDefault();
 
     const interactor = container.resolve('FileFindingInteractor');
