@@ -1,4 +1,5 @@
 import './setup-container';
+import {container} from "tsyringe";
 
 // 受信
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -13,6 +14,11 @@ scriptElem.onload = function() {
 };
 (document.head || document.documentElement).appendChild(scriptElem);
 
+
+const hotkeyRepo = container.resolve('IHotkeyRepository');
+hotkeyRepo.get().then((hotkeys) => {
+	console.log(hotkeys);
+});
 
 // window.addEventListener("message", function(event) {
 // 	console.log('called listener!!!!');

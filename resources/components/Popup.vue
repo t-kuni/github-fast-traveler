@@ -31,33 +31,41 @@
     export default {
         components: {HotkeyInput},
         mounted() {
+            (async () => {
+                console.log('mounted');
+                this.findFileKeys = await this.getFindFileKeys();
+                this.findCodeKeys = await this.getFindCodeKeys();
+                console.log(this.findFileKeys, this.findCodeKeys);
+            })().then(() => {
+                console.log('mounted-complate')
+            })
         },
         props     : {
         },
-        data      : function () {
+        data      : () => {
             return {
-                findFileKeys: this.getFindFileKeys(),
-                findCodeKeys: this.getFindCodeKeys(),
+                findFileKeys: '',
+                findCodeKeys: '',
             }
         },
         computed  : {},
         methods   : {
-            onClickReset() {
-                this.findFileKeys = this.getFindFileKeys();
-                this.findCodeKeys = this.getFindCodeKeys();
+            async onClickReset() {
+                this.findFileKeys = await this.getFindFileKeys();
+                this.findCodeKeys = await this.getFindCodeKeys();
             },
             onClickSave() {
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
                 const hotkeys = new Hotkeys(this.findCodeKeys, this.findFileKeys);
                 hotkeyRepo.save(hotkeys);
             },
-            getFindCodeKeys() {
+            async getFindCodeKeys() {
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
-                return hotkeyRepo.get().findCodeKeys;
+                return (await hotkeyRepo.get()).findCodeKeys;
             },
-            getFindFileKeys() {
+            async getFindFileKeys() {
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
-                return hotkeyRepo.get().findFileKeys;
+                return (await hotkeyRepo.get()).findFileKeys;
             },
         }
     }

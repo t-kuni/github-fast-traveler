@@ -5,5 +5,5 @@ export interface IHotkeyRepository {
 
     get(): Promise<Hotkeys>;
 
-    has(): boolean;
+    has(): Promise<boolean>;
 }

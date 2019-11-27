@@ -5,6 +5,7 @@ import BootstrapVue from 'bootstrap-vue';
 import '../../resources/scss/popup.scss';
 import {container} from "tsyringe";
 import Hotkeys from "../Domain/ValueObjects/Hotkeys";
+console.log('popup.js running!!');
 
 Vue.use(BootstrapVue);
 
@@ -57,10 +58,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const hotkeyRepo = container.resolve('IHotkeyRepository');
-if (!hotkeyRepo.has()) {
+console.log('a1');
+hotkeyRepo.has().then(async has => {
+    console.log('a2');
+    if (has) {
+        return;
+    }
+
+    console.log('a3');
     const hotkey = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
-    hotkeyRepo.save(hotkey);
-}
+    await hotkeyRepo.save(hotkey);
+    console.log('a4');
+});
+console.log('a5');
 
 function onClickHelloWorld()
 {
