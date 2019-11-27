@@ -1,9 +1,9 @@
 import Hotkeys from "../../../Domain/ValueObjects/Hotkeys";
 
 export interface IHotkeyRepository {
-    save(hotkeys: Hotkeys): void;
+    save(hotkeys: Hotkeys): Promise<any>;
 
-    get(): Hotkeys;
+    get(): Promise<Hotkeys>;
 
     has(): boolean;
 }
