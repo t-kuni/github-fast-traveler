@@ -16,15 +16,13 @@
             this.keyDetector = container.resolve('KeyDetector');
         },
         props     : {
-            defaultValue: {
+            value: {
                 type: String,
                 default: '',
             }
         },
         data      : function () {
             return {
-                focusing: false,
-                value: this.defaultValue,
             }
         },
         computed  : {
@@ -32,7 +30,8 @@
         methods   : {
             onKeyDown(e) {
                 this.keyDetector.onKeyDown(e.keyCode);
-                this.value = this.keyDetector.getHotkey();
+
+                this.$emit('input', this.keyDetector.getHotkey());
                 e.preventDefault();
                 return false;
             },

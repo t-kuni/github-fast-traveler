@@ -57,10 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const hotkeyRepo = container.resolve('IHotkeyRepository');
-if (!hotkeyRepo.has()) {
+hotkeyRepo.has().then(async has => {
+    if (has) {
+        return;
+    }
+
     const hotkey = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
-    hotkeyRepo.save(hotkey);
-}
+    await hotkeyRepo.save(hotkey);
+});
 
 function onClickHelloWorld()
 {

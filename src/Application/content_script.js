@@ -1,4 +1,7 @@
 import './setup-container';
+import {container} from "tsyringe";
+import hotkeys from "hotkeys-js";
+import {dispatchEvent, listenEvent} from "./event-util";
 
 // 受信
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -13,13 +16,9 @@ scriptElem.onload = function() {
 };
 (document.head || document.documentElement).appendChild(scriptElem);
 
-
-// window.addEventListener("message", function(event) {
-// 	console.log('called listener!!!!');
-// 	if (event.source !== window)
-// 		return;
-//
-// 	if (event.data.type && event.data.type === "initialized_view") {
-// 		vm = event.data.payload.vm;
-// 	}
-// });
+listenEvent('on_loaded_embedded_script', () => {
+	const hotkeyRepo = container.resolve('IHotkeyRepository');
+	hotkeyRepo.get().then((hotkeys) => {
+		dispatchEvent("on_loaded_hotkeys", hotkeys);
+	});
+});

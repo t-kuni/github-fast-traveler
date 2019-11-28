@@ -24,6 +24,7 @@ const baseManifest = {
     "dist/embedded_script.js"
   ],
   "permissions": [
+      "storage"
   ]
 };
 
