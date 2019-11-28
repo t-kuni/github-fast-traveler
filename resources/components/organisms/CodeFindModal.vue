@@ -62,8 +62,9 @@
                     this.searchType = 'all';
                 }
 
-                // FIXME not working
-                // this.$refs.searchWordInput.select();
+                setTimeout(() => {
+                    this.$refs.searchWordInput.select();
+                }, 100);
             })
         },
         props     : {
