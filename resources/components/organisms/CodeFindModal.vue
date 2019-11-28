@@ -1,45 +1,48 @@
 <template>
     <div>
         <b-modal id="code-find-modal" :static="true" centered title="Find Code" size="lg">
-            <b-form-group label="Find Scope">
-                <b-form-radio-group
-                        v-model="searchType"
-                        name="radio-options"
+            <b-form @submit="onClickFind">
+                <b-form-group label="Find Scope">
+                    <b-form-radio-group
+                            v-model="searchType"
+                            name="radio-options"
+                    >
+                        <b-form-radio value="all">
+                            All Repositories
+                        </b-form-radio>
+                        <b-form-radio value="current-user" v-if="pageContext.hasRepoOwnerName()">
+                            Current User
+                            <b-form-input :value="pageContext.getRepoOwnerName()" readonly></b-form-input>
+                        </b-form-radio>
+                        <b-form-radio value="current-repo" v-if="pageContext.hasRepoName()">
+                            Current Repository
+                            <b-form-input :value="pageContext.getRepoName()" readonly></b-form-input>
+                        </b-form-radio>
+                        <b-form-radio value="my-repo" v-if="pageContext.hasLoginName()">
+                            My Repositories
+                            <b-form-input :value="pageContext.getLoginName()" readonly></b-form-input>
+                        </b-form-radio>
+                    </b-form-radio-group>
+                </b-form-group>
+
+                <b-form-group
+                        class="mb-0"
                 >
-                    <b-form-radio value="all">
-                        All Repositories
-                    </b-form-radio>
-                    <b-form-radio value="current-user" v-if="pageContext.hasRepoOwnerName()">
-                        Current User
-                        <b-form-input :value="pageContext.getRepoOwnerName()" readonly></b-form-input>
-                    </b-form-radio>
-                    <b-form-radio value="current-repo" v-if="pageContext.hasRepoName()">
-                        Current Repository
-                        <b-form-input :value="pageContext.getRepoName()" readonly></b-form-input>
-                    </b-form-radio>
-                    <b-form-radio value="my-repo" v-if="pageContext.hasLoginName()">
-                        My Repositories
-                        <b-form-input :value="pageContext.getLoginName()" readonly></b-form-input>
-                    </b-form-radio>
-                </b-form-radio-group>
-            </b-form-group>
+                    <b-form-input
+                            id="input-formatter"
+                            v-model="searchWord"
+                            placeholder="Enter your name"
+                            ref="searchWordInput"
+                            @keydown.enter="onClickFind"
+                    ></b-form-input>
+                </b-form-group>
 
-            <b-form-group
-                    class="mb-0"
-            >
-                <b-form-input
-                        id="input-formatter"
-                        v-model="searchWord"
-                        placeholder="Enter your name"
-                        ref="searchWordInput"
-                ></b-form-input>
-            </b-form-group>
-
-            <template v-slot:modal-footer="{ ok, cancel, hide }">
-                <b-button variant="success" @click="onClickFind">
-                    Find
-                </b-button>
-            </template>
+                <template v-slot:modal-footer="{ ok, cancel, hide }">
+                    <b-button variant="success" @click="onClickFind">
+                        Find
+                    </b-button>
+                </template>
+            </b-form>
         </b-modal>
     </div>
 </template>
