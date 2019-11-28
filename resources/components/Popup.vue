@@ -32,13 +32,9 @@
         components: {HotkeyInput},
         mounted() {
             (async () => {
-                console.log('mounted');
                 this.findFileKeys = await this.getFindFileKeys();
                 this.findCodeKeys = await this.getFindCodeKeys();
-                console.log(this.findFileKeys, this.findCodeKeys);
-            })().then(() => {
-                console.log('mounted-complate')
-            })
+            })();
         },
         props     : {
         },

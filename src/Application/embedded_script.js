@@ -6,6 +6,7 @@ import '../../resources/scss/embedded.scss';
 import hotkeys from 'hotkeys-js';
 import {container} from "tsyringe";
 import {setupStore} from './store';
+import {dispatchEvent, listenEvent} from "./event-util";
 
 //
 // View Setup
@@ -28,25 +29,6 @@ const vm = new Vue({
 const interactor = container.resolve('AppInitializationInteractor');
 interactor.initialize();
 
-const hotkeyRepo = container.resolve('IHotkeyRepository');
-const hotkeyData = hotkeyRepo.get();
-
-//
-// Event Listener Setup
-//
-hotkeys(hotkeyData.findCodeKeys, function(event, handler){
-    event.preventDefault();
-
-    vm.$bvModal.show('code-find-modal');
-});
-
-hotkeys(hotkeyData.findFileKeys, function(event, handler){
-    event.preventDefault();
-
-    const interactor = container.resolve('FileFindingInteractor');
-    interactor.find();
-});
-
 //
 // Logic Par Page
 //
@@ -55,3 +37,22 @@ if (pageContext.isFileFindPage()) {
     const interactor = container.resolve('FileFindPageOpeningInteractor');
     interactor.onOpen();
 }
+
+listenEvent("on_loaded_hotkeys", () => {
+    const hotkeyData = event.data.payload;
+
+    hotkeys(hotkeyData.findCodeKeys, function(event, handler){
+        event.preventDefault();
+
+        vm.$bvModal.show('code-find-modal');
+    });
+
+    hotkeys(hotkeyData.findFileKeys, function(event, handler){
+        event.preventDefault();
+
+        const interactor = container.resolve('FileFindingInteractor');
+        interactor.find();
+    });
+});
+
+dispatchEvent("on_loaded_embedded_script");
