@@ -12,7 +12,8 @@
                               label-for="find-code-keys-input"
                               :invalid-feedback="invalidFindCodeKeys"
                               :state="!invalidFindCodeKeys">
-                    <hotkey-input id="find-code-keys-input" v-model="findCodeKeys"></hotkey-input>
+                    <hotkey-input id="find-code-keys-input" v-model="findCodeKeys"
+                                  @reset="onResetFindCodeKeys"></hotkey-input>
                 </b-form-group>
                 <b-form-group label="Find File:"
                               label-cols="3"
@@ -20,7 +21,8 @@
                               label-for="find-file-keys-input"
                               :invalid-feedback="invalidFindFileKeys"
                               :state="!invalidFindFileKeys">
-                    <hotkey-input id="find-file-keys-input" v-model="findFileKeys"></hotkey-input>
+                    <hotkey-input id="find-file-keys-input" v-model="findFileKeys"
+                                  @reset="onResetFindFileKeys"></hotkey-input>
                 </b-form-group>
                 <b-button variant="outline-secondary" @click="onClickReset">Reset</b-button>
                 <b-button variant="success" @click="onClickSave" :disabled="invalidForm">Save</b-button>
@@ -42,8 +44,7 @@
                 this.findCodeKeys = await this.getFindCodeKeys();
             })();
         },
-        props     : {
-        },
+        props     : {},
         data      : () => {
             return {
                 findFileKeys: '',
@@ -76,7 +77,7 @@
             },
             onClickSave() {
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
-                const hotkeys = new Hotkeys(this.findCodeKeys, this.findFileKeys);
+                const hotkeys    = new Hotkeys(this.findCodeKeys, this.findFileKeys);
                 hotkeyRepo.save(hotkeys);
             },
             async getFindCodeKeys() {
@@ -87,6 +88,12 @@
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
                 return (await hotkeyRepo.get()).findFileKeys;
             },
+            async onResetFindCodeKeys() {
+                this.findCodeKeys = await this.getFindCodeKeys();
+            },
+            async onResetFindFileKeys() {
+                this.findFileKeys = await this.getFindFileKeys();
+            }
         }
     }
 </script>

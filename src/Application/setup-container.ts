@@ -13,6 +13,8 @@ import {FileFindPageOpeningInteractor} from "./UseCases/FileFindPageOpeningInter
 import {KeyDetector} from "./Services/KeyDetector";
 import {HotkeyRepository} from "../Infrastructure/Repositories/HotkeyRepository";
 
+const isInTest = typeof global.it === 'function';
+
 // Application Layer
 container.register("CodeFindingInteractor", {useClass: CodeFindingInteractor});
 container.register("FileFindingInteractor", {useClass: FileFindingInteractor});
@@ -27,4 +29,4 @@ container.register("ISearchFileNameRepository", {useClass: SearchFileNameReposit
 container.register("IUrlRepository", {useClass: UrlRepository});
 container.register("IDomAdapter", {useClass: DomAdapter});
 container.register("IGithubApiAdapter", {useClass: GithubApiAdapter});
-container.register("IHotkeyRepository", {useValue: new HotkeyRepository(chrome)});
+container.register("IHotkeyRepository", {useValue: new HotkeyRepository(isInTest ? null : chrome)});

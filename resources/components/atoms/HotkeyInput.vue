@@ -6,6 +6,8 @@
 
 <script>
     import {container} from 'tsyringe';
+    const KEY_ESC = 27;
+    const KEY_BACKSPACE = 8;
 
     export default {
         components: {},
@@ -30,7 +32,15 @@
         },
         methods   : {
             onKeyDown(e) {
-                this.keyDetector.onKeyDown(e.keyCode);
+                switch (e.keyCode) {
+                    case KEY_ESC:
+                    case KEY_BACKSPACE:
+                        this.keyDetector.clear(e.keyCode);
+                        break;
+                    default:
+                        this.keyDetector.onKeyDown(e.keyCode);
+                        break;
+                }
 
                 this.$emit('input', this.keyDetector.getHotkey());
                 e.preventDefault();
