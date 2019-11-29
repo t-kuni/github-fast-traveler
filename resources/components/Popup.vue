@@ -8,16 +8,22 @@
             <b-form>
                 <b-form-group label="Find Code:"
                               label-cols="3"
-                              label-align="right">
-                    <hotkey-input v-model="findCodeKeys"></hotkey-input>
+                              label-align="right"
+                              label-for="find-code-keys-input"
+                              :invalid-feedback="invalidFindCodeKeys"
+                              :state="!invalidFindCodeKeys">
+                    <hotkey-input id="find-code-keys-input" v-model="findCodeKeys"></hotkey-input>
                 </b-form-group>
                 <b-form-group label="Find File:"
                               label-cols="3"
-                              label-align="right">
-                    <hotkey-input v-model="findFileKeys"></hotkey-input>
+                              label-align="right"
+                              label-for="find-file-keys-input"
+                              :invalid-feedback="invalidFindFileKeys"
+                              :state="!invalidFindFileKeys">
+                    <hotkey-input id="find-file-keys-input" v-model="findFileKeys"></hotkey-input>
                 </b-form-group>
                 <b-button variant="outline-secondary" @click="onClickReset">Reset</b-button>
-                <b-button variant="success" @click="onClickSave">Save</b-button>
+                <b-button variant="success" @click="onClickSave" :disabled="invalidForm">Save</b-button>
             </b-form>
         </b-container>
     </div>
@@ -44,7 +50,25 @@
                 findCodeKeys: '',
             }
         },
-        computed  : {},
+        computed  : {
+            invalidFindCodeKeys() {
+                if (!this.findCodeKeys || this.findCodeKeys.length === 0) {
+                    return 'Enter at least 1 characters'
+                } else {
+                    return null;
+                }
+            },
+            invalidFindFileKeys() {
+                if (!this.findFileKeys || this.findFileKeys.length === 0) {
+                    return 'Enter at least 1 characters'
+                } else {
+                    return null;
+                }
+            },
+            invalidForm() {
+                return this.invalidFindCodeKeys || this.invalidFindFileKeys;
+            }
+        },
         methods   : {
             async onClickReset() {
                 this.findFileKeys = await this.getFindFileKeys();
