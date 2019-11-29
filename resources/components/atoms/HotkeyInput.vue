@@ -1,10 +1,7 @@
 <template>
-    <b-col>
-        <b-form-input id="find-code-hotkeys" type="text" ref="input" :value="value"
-                      @keyup="onKeyUp" @keydown="onKeyDown">
-
-        </b-form-input>
-    </b-col>
+    <b-form-input :id="id" type="text" ref="input" :value="value"
+                  @keyup="onKeyUp" @keydown="onKeyDown">
+    </b-form-input>
 </template>
 
 <script>
@@ -19,6 +16,10 @@
             value: {
                 type: String,
                 default: '',
+            },
+            id: {
+                type: String,
+                default: null,
             }
         },
         data      : function () {
