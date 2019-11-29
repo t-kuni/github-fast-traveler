@@ -18,11 +18,6 @@ export class KeyDetector {
             return;
         }
 
-        if (keyCode === 27) {
-            this.keys = [];
-            return;
-        }
-
         this.keys.push(keyCode);
     }
 
@@ -38,5 +33,9 @@ export class KeyDetector {
         return keyInfos.reduce((acc, info) => {
             return acc + (acc !== '' ? '+' : '') + info.name;
         }, '');
+    }
+
+    public clear() {
+        this.keys = [];
     }
 }
