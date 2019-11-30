@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="400mm"
+   height="400mm"
+   viewBox="0 0 400 400"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="icon.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="968.7273"
+     inkscape:cy="473.07134"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="レイヤー 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,103)">
+    <circle
+       style="opacity:1;fill:#171515;fill-opacity:1;stroke:#05897b;stroke-width:0.41746059;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4506"
+       cx="199.9176"
+       cy="97.082397"
+       r="199.88525" />
+    <circle
+       style="opacity:1;fill:#171515;fill-opacity:1;stroke:#05897b;stroke-width:0.41746059;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4506-5"
+       cx="787.91058"
+       cy="319.45065"
+       r="199.88527" />
+    <g
+       style="opacity:1;fill:#ffffff"
+       id="g4504-0"
+       transform="matrix(-0.60923064,0,0,0.60923064,882.35063,173.33543)">
+      <g
+         id="g4491-7"
+         style="fill:#ffffff;fill-opacity:1"
+         transform="matrix(-0.93203606,-0.36236553,-0.36236553,0.93203606,486.3505,110.16415)">
+        <path
+           id="path4487-2"
+           style="fill:#ffffff;fill-opacity:1"
+           d="M 423.9,151.41 131.154,245.043 64.712,209.5 l -33.449,12.668 -13.199,4.93 0.05,0.051 -0.164,0.062 26.152,27.133 12.676,13.262 -49.151,12.756 c -4.786,1.45 -7.778,5.442 -7.622,10.164 0.266,7.973 9.305,14.965 17.527,16.875 8.59,1.996 121.145,14.293 125.246,14.934 l 1.664,0.258 68.734,-19.473 39.023,-10.965 -47.826,137.875 58.394,-20.246 c 2.633,-0.863 5.039,-2.222 7.145,-4.038 2.004,-1.73 3.645,-3.805 4.871,-6.153 l 91.414,-139.832 85.254,-24.156 c 42.535,-12.918 59.503,-39.699 60.527,-54.547 1.176,-17.012 -45.492,-40.121 -88.078,-29.648 z"
+           class="st0"
+           inkscape:connector-curvature="0" />
+        <path
+           id="path4489-1"
+           style="fill:#ffffff;fill-opacity:1"
+           d="m 221.022,187.101 67.426,-20.473 52.656,-15.863 -0.187,-0.07 0.246,-0.078 -165.915,-66.301 c -2.355,-1.219 -4.886,-1.973 -7.523,-2.238 -2.766,-0.282 -5.516,-0.012 -8.168,0.797 l -36.828,10.504 -22.512,6.316 0.102,0.074 -0.195,0.054 z"
+           class="st0"
+           inkscape:connector-curvature="0" />
+      </g>
+    </g>
+    <g
+       style="opacity:1;fill:#ffffff"
+       id="g4554"
+       transform="matrix(0.55690938,0,0,0.55690938,42.464106,-35.947099)">
+      <g
+         id="g4541"
+         style="fill:#ffffff">
+        <polygon
+           id="polygon4537"
+           style="fill:#ffffff"
+           points="211.257,394.524 121.71,333.638 121.71,463.73 "
+           class="st0" />
+        <polygon
+           id="polygon4539"
+           style="fill:#ffffff"
+           points="335.73,459.532 512,48.27 0,216.127 122.938,305.26 465.837,86.043 152.628,326.791 "
+           class="st0" />
+      </g>
+    </g>
+  </g>
+  <style
+     id="style4485"
+     type="text/css">
+	.st0{fill:#374149;}
+</style>
+  <style
+     id="style4535"
+     type="text/css">
+	.st0{fill:#4B4B4B;}
+</style>
+</svg>

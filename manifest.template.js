@@ -10,7 +10,7 @@ const baseManifest = {
   "author": "t-kuni",
 
   "browser_action": {
-    "default_icon": "resources/images/icon.png",
+    "default_icon": "resources/images/icon128.png",
     "default_popup": "dist/popup.html"
   },
   "content_scripts": [
@@ -25,7 +25,12 @@ const baseManifest = {
   ],
   "permissions": [
       "storage"
-  ]
+  ],
+  "icons": {
+      "16": "resources/images/icon16.png",
+      "48": "resources/images/icon48.png",
+      "128": "resources/images/icon128.png"
+  },
 };
 
 let env = 'production';
