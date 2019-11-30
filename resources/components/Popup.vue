@@ -1,9 +1,9 @@
 <template>
     <div>
         <b-container fluid>
-            <b-row>
+            <b-row class="header-area">
                 <b-col col="12">
-                    <h1>Github Fast Traveler</h1>
+                    <h1><img src="/resources/images/icon128.png"> Github Fast Traveler</h1>
                 </b-col>
             </b-row>
 
@@ -144,6 +144,12 @@
 </script>
 
 <style lang="scss" scoped>
+    .header-area {
+        img {
+            width: 64px;
+        }
+    }
+
     .alert-area {
         margin-top: 15px;
     }
