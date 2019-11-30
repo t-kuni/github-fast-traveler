@@ -48,7 +48,7 @@
                     <b-form-input
                             id="input-formatter"
                             v-model="searchWord"
-                            placeholder="Enter your name"
+                            placeholder="Enter search word"
                             ref="searchWordInput"
                             @keydown.enter="onClickFind"
                     ></b-form-input>
