@@ -38,7 +38,7 @@
 
                         <b-row class="notification-area">
                             <b-col col="12">
-                                <small class="text-muted">If you want to reset a shortcut then pressing escape key.</small>
+                                <small class="text-muted">If you want to clear a shortcut then pressing escape key or backspace key.</small>
                             </b-col>
                         </b-row>
 
