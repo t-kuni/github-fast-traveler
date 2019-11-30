@@ -17,8 +17,7 @@
                 <b-col col="12">
                     <b-form>
                         <b-form-group label="Find Code:"
-                                      label-cols="3"
-                                      label-align="right"
+                                      label-cols="2"
                                       label-for="find-code-keys-input"
                                       :invalid-feedback="invalidFindCodeKeys"
                                       :state="!invalidFindCodeKeys">
@@ -27,8 +26,7 @@
                         </b-form-group>
                         <b-form-group class="last-form-group"
                                       label="Find File:"
-                                      label-cols="3"
-                                      label-align="right"
+                                      label-cols="2"
                                       label-for="find-file-keys-input"
                                       :invalid-feedback="invalidFindFileKeys"
                                       :state="!invalidFindFileKeys">
@@ -167,7 +165,6 @@
 
         .buttons-area {
             margin-top: 15px;
-            text-align: right;
         }
     }
 </style>
