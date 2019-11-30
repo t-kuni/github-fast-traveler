@@ -7,6 +7,7 @@ import hotkeys from 'hotkeys-js';
 import {container} from "tsyringe";
 import {setupStore} from './store';
 import {dispatchEvent, listenEvent} from "./event-util";
+import Hotkeys from "../Domain/ValueObjects/Hotkeys";
 
 //
 // View Setup
@@ -39,7 +40,11 @@ if (pageContext.isFileFindPage()) {
 }
 
 listenEvent("on_loaded_hotkeys", () => {
-    const hotkeyData = event.data.payload;
+    let hotkeyData = event.data.payload;
+
+    if (hotkeyData === null) {
+        hotkeyData = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
+    }
 
     hotkeys(hotkeyData.findCodeKeys, function(event, handler){
         event.preventDefault();
