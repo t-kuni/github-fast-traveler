@@ -3,10 +3,10 @@ const fs = require('fs');
 const baseManifest = {
   "manifest_version": 2,
 
-  "name": "github-fast-traveler",
+  "name": "Github Fast Traveler",
   "short_name": "github-fast-traveler",
   "description": "github-fast-traveler",
-  "version": "0.1",
+  "version": "0.0.1",
   "author": "t-kuni",
 
   "browser_action": {

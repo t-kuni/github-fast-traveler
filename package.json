@@ -8,11 +8,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack --config webpack.config.js --mode development",
+    "webpack:prod": "webpack --config webpack.config.js --mode production",
     "webpack:watch": "webpack --config webpack.config.js --mode development --watch",
     "dev": "npm-run-all webpack manifest",
     "watch": "npm-run-all webpack:watch manifest:watch",
+    "release": "run-s webpack:prod manifest zip",
     "manifest": "node manifest.template.js dev",
-    "manifest:watch": "npm-watch"
+    "manifest:watch": "npm-watch",
+    "zip": "node zip.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,7 @@
   "homepage": "https://github.com/t-kuni/chrome-extension-skeleton#readme",
   "dependencies": {},
   "devDependencies": {
+    "adm-zip": "^0.4.13",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.1.0",
     "cache-loader": "^4.1.0",
