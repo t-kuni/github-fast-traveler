@@ -1,9 +1,12 @@
+type Version = 1; // if increment version then add ' | 2 | 3 ...'
+
 export default class RepoAccessHistory {
-    private version: number;
+
+    private version: Version;
     private userName: string;
     private repoName: string;
 
-    constructor(version: number, userName: string, repoName: string) {
+    constructor(version: Version, userName: string, repoName: string) {
         this.version = version;
         this.userName = userName;
         this.repoName = repoName;
@@ -24,5 +27,9 @@ export default class RepoAccessHistory {
             obj.userName,
             obj.repoName,
         )
+    }
+
+    public toString() {
+        return this.userName + '/' + this.repoName;
     }
 }

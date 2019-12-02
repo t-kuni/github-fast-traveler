@@ -9,7 +9,7 @@ export class RepoAccessHistoryRepository implements IRepoAccessHistoryRepository
     }
 
     key(): string {
-        return 'chrome_extension:github_fast_traveler:hotkeys';
+        return 'chrome_extension:github_fast_traveler:repo_access_history';
     }
 
     save(history: Array<RepoAccessHistory>): Promise<any> {

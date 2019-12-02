@@ -58,6 +58,12 @@ listenEvent("on_loaded_hotkeys", () => {
         const interactor = container.resolve('FileFindingInteractor');
         interactor.find();
     });
+
+    hotkeys('ctrl+shift+s', function(event, handler){
+        event.preventDefault();
+
+        vm.$bvModal.show('repo-find-modal');
+    });
 });
 
 dispatchEvent("on_loaded_embedded_script");

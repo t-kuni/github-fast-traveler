@@ -2,8 +2,12 @@
     <div>
         <b-modal id="repo-find-modal" :static="true" centered title="Find Repositories" size="lg">
 
+
             <div>Recently access repositories</div>
 
+            <div v-for="history in histories">
+                {{history}}
+            </div>
         </b-modal>
     </div>
 </template>
@@ -15,7 +19,10 @@
     export default {
         components: {},
         mounted() {
-            this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
+            this.$root.$on('bv::modal::show', async (bvEvent, modalId) => {
+                // TODO ここではストレージにアクセスできないので、イベントを発行する必要がある
+                const historyRepo = container.resolve('IRepoAccessHistoryRepository');
+                this.histories = await historyRepo.get();
             })
         },
         props     : {
@@ -23,20 +30,12 @@
         data      : function () {
             return {
                 GETTERS,
+                histories: [],
             }
         },
         computed  : {
-            pageContext() {
-                return container.resolve('PageContextDetector');
-            },
-            codeFindingInteractor() {
-                return container.resolve('CodeFindingInteractor');
-            },
         },
         methods   : {
-            onClickFind() {
-                this.codeFindingInteractor.find(this.searchType, this.searchWord);
-            },
         }
     }
 </script>
