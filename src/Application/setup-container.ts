@@ -12,6 +12,7 @@ import {StateProvider} from "./Services/StateProvider";
 import {FileFindPageOpeningInteractor} from "./UseCases/FileFindPageOpeningInteractor";
 import {KeyDetector} from "./Services/KeyDetector";
 import {HotkeyRepository} from "../Infrastructure/Repositories/HotkeyRepository";
+import {RepoAccessHistoryRepository} from "../Infrastructure/Repositories/RepoAccessHistoryRepository";
 
 const isInTest = typeof global.it === 'function';
 
@@ -30,3 +31,4 @@ container.register("IUrlRepository", {useClass: UrlRepository});
 container.register("IDomAdapter", {useClass: DomAdapter});
 container.register("IGithubApiAdapter", {useClass: GithubApiAdapter});
 container.register("IHotkeyRepository", {useValue: new HotkeyRepository(isInTest ? null : chrome)});
+container.register("IRepoAccessHistoryRepository", {useValue: new RepoAccessHistoryRepository(isInTest ? null : chrome)});

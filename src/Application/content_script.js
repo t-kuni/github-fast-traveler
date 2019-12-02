@@ -12,10 +12,15 @@ scriptElem.onload = function() {
 listenEvent('on_loaded_embedded_script', () => {
 	const hotkeyRepo = container.resolve('IHotkeyRepository');
 	hotkeyRepo.get().then((hotkeys) => {
-		console.log('hotkeys', hotkeys);
-
 		dispatchEvent("on_loaded_hotkeys", hotkeys);
-	}).catch((error) => {
-		console.log('error', error);
 	});
 });
+
+
+const historyRepo = container.resolve('IRepoAccessHistoryRepository');
+const pageContext = container.resolve('PageContextDetector');
+
+if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName) {
+	const histories = historyRepo.get();
+	histories.push(new Array)
+}
