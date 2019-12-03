@@ -1,7 +1,7 @@
 import RepoAccessHistory from "../../../Domain/ValueObjects/RepoAccessHistory";
 
 export interface IRepoAccessHistoryRepository {
-    save(history: Array<RepoAccessHistory>): Promise<any>;
+    save(history: Array<RepoAccessHistory>): void;
 
     get(): Promise<Array<RepoAccessHistory>>;
 

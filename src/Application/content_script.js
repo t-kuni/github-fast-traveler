@@ -26,7 +26,7 @@ listenEvent('on_show_repo_find_modal', async () => {
 const historyRepo = container.resolve('IRepoAccessHistoryRepository');
 const pageContext = container.resolve('PageContextDetector');
 
-if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName) {
+if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 	(async () => {
 		let histories = await historyRepo.get();
 
@@ -41,3 +41,13 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName) {
 		historyRepo.save(histories);
 	})();
 }
+
+
+
+listenEvent('storage_get', (payloadJson) => {
+	// TODO: postMessageでクロージャが持っていけない模様
+	const payload = JSON.parse(payloadJson);
+	console.log(payload);
+	chrome.storage.local.get(payload.key, payload.cb);
+});
+listenEvent('storage_set', (p) => chrome.storage.local.set.bind(this, p.data, p.cb));

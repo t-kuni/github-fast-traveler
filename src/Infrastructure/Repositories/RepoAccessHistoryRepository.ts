@@ -1,46 +1,31 @@
 import RepoAccessHistory from "../../Domain/ValueObjects/RepoAccessHistory";
-import {IRepoAccessHistoryRepository} from "./interfaces/RepoAccessHistoryRepository";
+import {IRepoAccessHistoryRepository} from "./interfaces/IRepoAccessHistoryRepository";
+import {inject, injectable} from "tsyringe";
+import {IStorage} from "./interfaces/IStorage";
 
+@injectable()
 export class RepoAccessHistoryRepository implements IRepoAccessHistoryRepository {
-    chrome: any;
+    private storage: IStorage;
 
-    constructor(chrome: any) {
-        this.chrome = chrome;
+    constructor(@inject('IStorage') storage: IStorage) {
+        this.storage = storage;
     }
 
     key(): string {
         return 'chrome_extension:github_fast_traveler:repo_access_history';
     }
 
-    save(history: Array<RepoAccessHistory>): Promise<any> {
-        const self = this;
+    save(history: Array<RepoAccessHistory>): void {
+        const key = this.key();
+        const value = history.map((h: RepoAccessHistory) => h.toJSON());
 
-        return new Promise((resolve, reject) => {
-            const key = this.key();
-            const value = history.map((h: RepoAccessHistory) => h.toJSON());
-
-            const data = {[key]: value};
-            self.chrome.storage.local.set(data, () => {
-                resolve();
-            });
-        });
+        this.storage.set(key, value);
     }
 
-    get(): Promise<Array<RepoAccessHistory>> {
-        const self = this;
+    async get(): Promise<Array<RepoAccessHistory>> {
+        const result = await this.storage.get(this.key());
 
-        return new Promise((resolve, reject) => {
-            self.chrome.storage.local.get(this.key(), (result) => {
-
-                if (!(this.key() in result)) {
-                    resolve(null);
-                    return;
-                }
-
-                const histories = result[this.key()].map((r) => RepoAccessHistory.fromJSON(r));
-                resolve(histories);
-            });
-        });
+        return result.map((r) => RepoAccessHistory.fromJSON(r));
     }
 
     async has(): Promise<boolean> {

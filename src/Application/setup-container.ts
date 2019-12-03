@@ -13,6 +13,7 @@ import {FileFindPageOpeningInteractor} from "./UseCases/FileFindPageOpeningInter
 import {KeyDetector} from "./Services/KeyDetector";
 import {HotkeyRepository} from "../Infrastructure/Repositories/HotkeyRepository";
 import {RepoAccessHistoryRepository} from "../Infrastructure/Repositories/RepoAccessHistoryRepository";
+import {Storage} from "../Infrastructure/Repositories/Storage";
 
 const isInTest = typeof global.it === 'function';
 
@@ -26,9 +27,10 @@ container.register("StateProvider", {useClass: StateProvider});
 container.register("KeyDetector", {useClass: KeyDetector});
 
 // Infrastructure Layer
+container.register("IStorage", {useClass: Storage});
 container.register("ISearchFileNameRepository", {useClass: SearchFileNameRepository});
 container.register("IUrlRepository", {useClass: UrlRepository});
 container.register("IDomAdapter", {useClass: DomAdapter});
 container.register("IGithubApiAdapter", {useClass: GithubApiAdapter});
 container.register("IHotkeyRepository", {useValue: new HotkeyRepository(isInTest ? null : chrome)});
-container.register("IRepoAccessHistoryRepository", {useValue: new RepoAccessHistoryRepository(isInTest ? null : chrome)});
+container.register("IRepoAccessHistoryRepository", {useClass: RepoAccessHistoryRepository});
