@@ -8,6 +8,7 @@ import {container} from "tsyringe";
 import {setupStore} from './store';
 import {dispatchEvent, listenEvent} from "./event-util";
 import Hotkeys from "../Domain/ValueObjects/Hotkeys";
+import {MUTATION} from "./mutations";
 
 //
 // View Setup
@@ -21,7 +22,7 @@ document.body.appendChild(rootElem);
 
 const vm = new Vue({
     render: h => h(Embedded),
-    state: setupStore(),
+    store: setupStore(),
 }).$mount('#' + rootElemID);
 
 //
@@ -39,8 +40,8 @@ if (pageContext.isFileFindPage()) {
     interactor.onOpen();
 }
 
-listenEvent("on_loaded_hotkeys", () => {
-    let hotkeyData = event.data.payload;
+listenEvent("on_loaded_hotkeys", (payload) => {
+    let hotkeyData = payload;
 
     if (hotkeyData === null) {
         hotkeyData = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
@@ -63,6 +64,19 @@ listenEvent("on_loaded_hotkeys", () => {
         event.preventDefault();
 
         vm.$bvModal.show('repo-find-modal');
+    });
+});
+
+listenEvent('on_loaded_repo_access_histories', (payload) => {
+    let histories = payload;
+
+    if (histories === null) {
+        histories = [];
+    }
+
+    const store = container.resolve('Store');
+    store.commit(MUTATION.SET_REPO_ACCESS_HISTORIES, {
+        histories,
     });
 });
 

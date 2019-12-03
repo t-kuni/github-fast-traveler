@@ -14,15 +14,14 @@
 
 <script>
     import {GETTERS} from "../../../src/Application/getters";
-    import {container} from 'tsyringe';
+    import {STATE} from "../../../src/Application/state";
+    import {dispatchEvent} from "../../../src/Application/event-util";
 
     export default {
         components: {},
         mounted() {
             this.$root.$on('bv::modal::show', async (bvEvent, modalId) => {
-                // TODO ここではストレージにアクセスできないので、イベントを発行する必要がある
-                const historyRepo = container.resolve('IRepoAccessHistoryRepository');
-                this.histories = await historyRepo.get();
+                dispatchEvent('on_show_repo_find_modal');
             })
         },
         props     : {
@@ -30,10 +29,12 @@
         data      : function () {
             return {
                 GETTERS,
-                histories: [],
             }
         },
         computed  : {
+            histories() {
+                return this.$store.state[STATE.REPO_ACCESS_HISTORIES];
+            }
         },
         methods   : {
         }
