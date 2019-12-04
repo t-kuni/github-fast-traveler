@@ -18,12 +18,6 @@ listenEvent('on_loaded_embedded_script', () => {
 	});
 });
 
-listenEvent('on_show_repo_find_modal', async () => {
-	const historyRepo = container.resolve('IRepoAccessHistoryRepository');
-	const histories = await historyRepo.get();
-	dispatchEvent("on_loaded_repo_access_histories", histories);
-});
-
 const historyRepo = container.resolve('IRepoAccessHistoryRepository');
 const pageContext = container.resolve('PageContextDetector');
 

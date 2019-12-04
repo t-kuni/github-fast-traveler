@@ -16,12 +16,24 @@
     import {GETTERS} from "../../../src/Application/getters";
     import {STATE} from "../../../src/Application/state";
     import {dispatchEvent} from "../../../src/events";
+    import {MUTATION} from "../../../src/Application/mutations";
+    import {container} from 'tsyringe'
 
     export default {
         components: {},
         mounted() {
             this.$root.$on('bv::modal::show', async (bvEvent, modalId) => {
-                dispatchEvent('on_show_repo_find_modal');
+                const historyRepo = container.resolve('IRepoAccessHistoryRepository');
+                let histories = await historyRepo.get();
+
+                if (histories === null) {
+                    histories = [];
+                }
+
+                const store = container.resolve('Store');
+                store.commit(MUTATION.SET_REPO_ACCESS_HISTORIES, {
+                    histories,
+                });
             })
         },
         props     : {

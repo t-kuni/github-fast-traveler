@@ -67,17 +67,4 @@ listenEvent("on_loaded_hotkeys", (payload) => {
     });
 });
 
-listenEvent('on_loaded_repo_access_histories', (payload) => {
-    let histories = payload;
-
-    if (histories === null) {
-        histories = [];
-    }
-
-    const store = container.resolve('Store');
-    store.commit(MUTATION.SET_REPO_ACCESS_HISTORIES, {
-        histories,
-    });
-});
-
 dispatchEvent("on_loaded_embedded_script");
