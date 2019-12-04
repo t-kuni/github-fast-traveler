@@ -44,10 +44,15 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 
 
 
-listenEvent('storage_get', (payloadJson) => {
-	// TODO: postMessageでクロージャが持っていけない模様
-	const payload = JSON.parse(payloadJson);
-	console.log(payload);
-	chrome.storage.local.get(payload.key, payload.cb);
+listenEvent('chrome_extension:github-fast-traveler:get_storage', async (payload) => {
+	console.log('get-lister', payload);
+	chrome.storage.local.get(payload.key, (result) => {
+		dispatchEvent(payload.listenerID, result);
+	});
 });
-listenEvent('storage_set', (p) => chrome.storage.local.set.bind(this, p.data, p.cb));
+listenEvent('chrome_extension:github-fast-traveler:set_storage', (payload) => {
+	console.log('set-lister', payload);
+	chrome.storage.local.set(payload.data, (result) => {
+		dispatchEvent(payload.listenerID, result);
+	});
+});
