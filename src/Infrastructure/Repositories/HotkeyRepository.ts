@@ -1,46 +1,32 @@
 import Hotkeys from "../../Domain/ValueObjects/Hotkeys";
 import {IHotkeyRepository} from "./interfaces/IHotkeyRepository";
+import {IStorage} from "./interfaces/IStorage";
+import {inject, injectable} from "tsyringe";
 
+@injectable()
 export class HotkeyRepository implements IHotkeyRepository {
-    chrome: any;
+    private storage: IStorage;
 
-    constructor(chrome: any) {
-        this.chrome = chrome;
+    constructor(@inject('IStorage') storage: IStorage) {
+        this.storage = storage;
     }
 
     key(): string {
         return 'chrome_extension:github_fast_traveler:hotkeys';
     }
 
-    save(hotkeys: Hotkeys): Promise<any> {
-        const self = this;
+    async save(hotkeys: Hotkeys): Promise<null> {
+        // FIXME can't access storage from popup
+        const key = this.key();
+        const value = hotkeys.toJSON();
 
-        return new Promise((resolve, reject) => {
-            const key = this.key();
-            const value = hotkeys.toJSON();
-
-            const data = { [key]: value };
-            self.chrome.storage.local.set(data, () => {
-                resolve();
-            });
-        });
+        return await this.storage.set(key, value);
     }
 
-    get(): Promise<Hotkeys> {
-        const self = this;
+    async get(): Promise<Hotkeys> {
+        const result = await this.storage.get(this.key());
 
-        return new Promise((resolve, reject) => {
-            self.chrome.storage.local.get(this.key(), (result) => {
-
-                if (!(this.key() in result)) {
-                    resolve(null);
-                    return;
-                }
-
-                const hotkeys = Hotkeys.fromJSON(result[this.key()]);
-                resolve(hotkeys);
-            });
-        });
+        return Hotkeys.fromJSON(result);
     }
 
     async has(): Promise<boolean> {

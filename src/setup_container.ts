@@ -32,5 +32,5 @@ container.register("ISearchFileNameRepository", {useClass: SearchFileNameReposit
 container.register("IUrlRepository", {useClass: UrlRepository});
 container.register("IDomAdapter", {useClass: DomAdapter});
 container.register("IGithubApiAdapter", {useClass: GithubApiAdapter});
-container.register("IHotkeyRepository", {useValue: new HotkeyRepository(isInTest ? null : chrome)});
+container.register("IHotkeyRepository", {useClass: HotkeyRepository});
 container.register("IRepoAccessHistoryRepository", {useClass: RepoAccessHistoryRepository});
