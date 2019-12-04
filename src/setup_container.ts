@@ -1,19 +1,19 @@
 import "reflect-metadata";
 import {container} from "tsyringe";
-import {SearchFileNameRepository} from "../Infrastructure/Repositories/SearchFileNameRepository";
-import {UrlRepository} from "../Infrastructure/Repositories/UrlRepository";
-import {DomAdapter} from "../Infrastructure/Adapters/DomAdapter";
-import {CodeFindingInteractor} from "./UseCases/CodeFindingInteractor";
-import {PageContextDetector} from "./Services/PageContextDetector";
-import {FileFindingInteractor} from "./UseCases/FileFindingInteractor";
-import {GithubApiAdapter} from "../Infrastructure/Adapters/GithubApiAdapter";
-import {AppInitializationInteractor} from "./UseCases/AppInitializationInteractor";
-import {StateProvider} from "./Services/StateProvider";
-import {FileFindPageOpeningInteractor} from "./UseCases/FileFindPageOpeningInteractor";
-import {KeyDetector} from "./Services/KeyDetector";
-import {HotkeyRepository} from "../Infrastructure/Repositories/HotkeyRepository";
-import {RepoAccessHistoryRepository} from "../Infrastructure/Repositories/RepoAccessHistoryRepository";
-import {Storage} from "../Infrastructure/Repositories/Storage";
+import {SearchFileNameRepository} from "./Infrastructure/Repositories/SearchFileNameRepository";
+import {UrlRepository} from "./Infrastructure/Repositories/UrlRepository";
+import {DomAdapter} from "./Infrastructure/Adapters/DomAdapter";
+import {CodeFindingInteractor} from "./Application/UseCases/CodeFindingInteractor";
+import {PageContextDetector} from "./Application/Services/PageContextDetector";
+import {FileFindingInteractor} from "./Application/UseCases/FileFindingInteractor";
+import {GithubApiAdapter} from "./Infrastructure/Adapters/GithubApiAdapter";
+import {AppInitializationInteractor} from "./Application/UseCases/AppInitializationInteractor";
+import {StateProvider} from "./Application/Services/StateProvider";
+import {FileFindPageOpeningInteractor} from "./Application/UseCases/FileFindPageOpeningInteractor";
+import {KeyDetector} from "./Application/Services/KeyDetector";
+import {HotkeyRepository} from "./Infrastructure/Repositories/HotkeyRepository";
+import {RepoAccessHistoryRepository} from "./Infrastructure/Repositories/RepoAccessHistoryRepository";
+import {Storage} from "./Infrastructure/Repositories/Storage";
 
 const isInTest = typeof global.it === 'function';
 

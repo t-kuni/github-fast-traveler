@@ -1,4 +1,4 @@
-import './setup-container';
+import '../setup_container';
 import Vue from 'vue';
 import Embedded from '../../resources/components/Embedded';
 import BootstrapVue from 'bootstrap-vue';
@@ -6,7 +6,7 @@ import '../../resources/scss/embedded.scss';
 import hotkeys from 'hotkeys-js';
 import {container} from "tsyringe";
 import {setupStore} from './store';
-import {dispatchEvent, listenEvent} from "./event-util";
+import {dispatchEvent, listenEvent} from "../events";
 import Hotkeys from "../Domain/ValueObjects/Hotkeys";
 import {MUTATION} from "./mutations";
 

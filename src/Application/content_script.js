@@ -1,7 +1,8 @@
-import './setup-container';
+import '../setup_container';
 import {container} from "tsyringe";
-import {dispatchEvent, listenEvent} from "./event-util";
+import {dispatchEvent, listenEvent} from "../events";
 import RepoAccessHistory from "../Domain/ValueObjects/RepoAccessHistory";
+import {EVENT} from './../events'
 
 const scriptElem = document.createElement('script');
 scriptElem.src = chrome.runtime.getURL('dist/embedded_script.js');
@@ -44,13 +45,13 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 
 
 
-listenEvent('chrome_extension:github-fast-traveler:get_storage', async (payload) => {
+listenEvent(EVENT.GET_STORAGE, (payload) => {
 	console.log('get-lister', payload);
 	chrome.storage.local.get(payload.key, (result) => {
 		dispatchEvent(payload.listenerID, result);
 	});
 });
-listenEvent('chrome_extension:github-fast-traveler:set_storage', (payload) => {
+listenEvent(EVENT.SET_STORAGE, (payload) => {
 	console.log('set-lister', payload);
 	chrome.storage.local.set(payload.data, (result) => {
 		dispatchEvent(payload.listenerID, result);

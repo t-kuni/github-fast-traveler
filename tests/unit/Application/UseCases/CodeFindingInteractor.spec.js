@@ -1,4 +1,4 @@
-import "../../../../src/Application/setup-container";
+import "../../../../src/setup_container";
 import {container} from "tsyringe";
 
 const assert = require('assert');

@@ -15,7 +15,7 @@
 <script>
     import {GETTERS} from "../../../src/Application/getters";
     import {STATE} from "../../../src/Application/state";
-    import {dispatchEvent} from "../../../src/Application/event-util";
+    import {dispatchEvent} from "../../../src/events";
 
     export default {
         components: {},

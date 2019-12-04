@@ -1,4 +1,4 @@
-import './setup-container';
+import '../setup_container';
 import Vue from 'vue';
 import Popup from '../../resources/components/Popup';
 import BootstrapVue from 'bootstrap-vue';

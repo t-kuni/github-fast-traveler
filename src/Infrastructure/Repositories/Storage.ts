@@ -1,4 +1,4 @@
-import {dispatchEvent, listenEventOnce} from '../../Application/event-util';
+import {dispatchEvent, listenEventOnce, EVENT} from '../../events';
 import {IStorage} from "./interfaces/IStorage";
 
 export class Storage implements IStorage {
@@ -10,13 +10,11 @@ export class Storage implements IStorage {
     }
 
     getSetlistenerID(): string {
-        console.log('getSetlistenerID', 'chrome_extension:github-fast-traveler:set_storage_result:' + this.id());
-        return 'chrome_extension:github-fast-traveler:set_storage_result:' + this.id();
+        return EVENT.GET_STORAGE_RESULT + ':' + this.id();
     }
 
     getGetlistenerID(): string {
-        console.log('getGetlistenerID', 'chrome_extension:github-fast-traveler:get_storage_result:' + this.id());
-        return 'chrome_extension:github-fast-traveler:get_storage_result:' + this.id();
+        return EVENT.SET_STORAGE_RESULT + ':' + this.id();
     }
 
     set(key: string, value: any): Promise<null> {
@@ -30,7 +28,7 @@ export class Storage implements IStorage {
             });
 
             const data = {[key]: value};
-            dispatchEvent('chrome_extension:github-fast-traveler:set_storage', {listenerID, data});
+            dispatchEvent(EVENT.SET_STORAGE, {listenerID, data});
         });
     }
 
@@ -49,7 +47,7 @@ export class Storage implements IStorage {
                 resolve(result[key]);
             });
 
-            dispatchEvent('chrome_extension:github-fast-traveler:get_storage', {listenerID, key});
+            dispatchEvent(EVENT.GET_STORAGE, {listenerID, key});
         });
     }
 }
