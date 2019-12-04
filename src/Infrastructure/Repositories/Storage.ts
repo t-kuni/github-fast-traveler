@@ -18,12 +18,10 @@ export class Storage implements IStorage {
     }
 
     set(key: string, value: any): Promise<null> {
-        console.log('set', key, value);
         return new Promise((resolve, reject) => {
             const listenerID = this.getSetlistenerID();
 
             listenEventOnce(listenerID, () => {
-                console.log('set-lister-result', listenerID);
                 resolve();
             });
 
@@ -33,12 +31,10 @@ export class Storage implements IStorage {
     }
 
     get(key: string): Promise<any> {
-        console.log('get', key);
         return new Promise((resolve, reject) => {
             const listenerID = this.getGetlistenerID();
 
             listenEventOnce(listenerID, (result) => {
-                console.log('get-listener-result', listenerID, result);
                 if (!(key in result)) {
                     resolve(null);
                     return;

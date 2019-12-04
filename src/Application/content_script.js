@@ -46,13 +46,11 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 
 
 listenEvent(EVENT.GET_STORAGE, (payload) => {
-	console.log('get-lister', payload);
 	chrome.storage.local.get(payload.key, (result) => {
 		dispatchEvent(payload.listenerID, result);
 	});
 });
 listenEvent(EVENT.SET_STORAGE, (payload) => {
-	console.log('set-lister', payload);
 	chrome.storage.local.set(payload.data, (result) => {
 		dispatchEvent(payload.listenerID, result);
 	});

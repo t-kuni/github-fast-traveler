@@ -19,7 +19,6 @@ export function dispatchEvent(type: string, payload: any = null): void {
 }
 
 export function listenEvent(type: string, cb: Function, options: any = null): void {
-    console.log('listenEvent', type);
     window.addEventListener("message", function (event) {
         if (event.source !== window)
             return;
