@@ -60,7 +60,7 @@ listenEvent("on_loaded_hotkeys", (payload) => {
         interactor.find();
     });
 
-    hotkeys('ctrl+shift+s', function(event, handler){
+    hotkeys(hotkeyData.recentlyRepoKeys, function(event, handler){
         event.preventDefault();
 
         vm.$bvModal.show('repo-find-modal');

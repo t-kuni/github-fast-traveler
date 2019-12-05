@@ -17,26 +17,35 @@
                 <b-col col="12">
                     <b-form>
                         <b-form-group label="Find Code:"
-                                      label-cols="2"
+                                      label-cols="3"
                                       label-for="find-code-keys-input"
                                       :invalid-feedback="invalidFindCodeKeys"
                                       :state="!invalidFindCodeKeys">
                             <hotkey-input id="find-code-keys-input" v-model="findCodeKeys"
                                           @reset="onResetFindCodeKeys"></hotkey-input>
                         </b-form-group>
-                        <b-form-group class="last-form-group"
-                                      label="Find File:"
-                                      label-cols="2"
+                        <b-form-group label="Find File:"
+                                      label-cols="3"
                                       label-for="find-file-keys-input"
                                       :invalid-feedback="invalidFindFileKeys"
                                       :state="!invalidFindFileKeys">
                             <hotkey-input id="find-file-keys-input" v-model="findFileKeys"
                                           @reset="onResetFindFileKeys"></hotkey-input>
                         </b-form-group>
+                        <b-form-group class="last-form-group"
+                                      label="Recently Repo:"
+                                      label-cols="3"
+                                      label-for="recently-repo-keys-input"
+                                      :invalid-feedback="invalidRecentlyRepoKeys"
+                                      :state="!invalidRecentlyRepoKeys">
+                            <hotkey-input id="recently-repo-keys-input" v-model="recentlyRepoKeys"
+                                          @reset="onResetRecentlyRepoKeys"></hotkey-input>
+                        </b-form-group>
 
                         <b-row class="notification-area">
                             <b-col col="12">
-                                <small class="text-muted">If you want to clear a shortcut then pressing escape key or backspace key.</small>
+                                <small class="text-muted">If you want to clear a shortcut then pressing escape key or
+                                    backspace key.</small>
                             </b-col>
                         </b-row>
 
@@ -76,15 +85,18 @@
         components: {HotkeyInput},
         mounted() {
             (async () => {
-                this.findFileKeys = await this.getFindFileKeys();
-                this.findCodeKeys = await this.getFindCodeKeys();
+                const hotkeys         = await this.getHotkeys();
+                this.findFileKeys     = hotkeys.findFileKeys;
+                this.findCodeKeys     = hotkeys.findCodeKeys;
+                this.recentlyRepoKeys = hotkeys.recentlyRepoKeys;
             })();
         },
         props     : {},
         data      : () => {
             return {
-                findFileKeys: '',
-                findCodeKeys: '',
+                findFileKeys             : '',
+                findCodeKeys             : '',
+                recentlyRepoKeys         : '',
                 saveSuccessAlertCountDown: 0,
             }
         },
@@ -103,36 +115,48 @@
                     return null;
                 }
             },
+            invalidRecentlyRepoKeys() {
+                if (!this.recentlyRepoKeys || this.recentlyRepoKeys.length === 0) {
+                    return 'Enter at least 1 characters'
+                } else {
+                    return null;
+                }
+            },
             invalidForm() {
                 return this.invalidFindCodeKeys !== null
-                    || this.invalidFindFileKeys !== null;
+                    || this.invalidFindFileKeys !== null
+                    || this.invalidRecentlyRepoKeys !== null;
             },
         },
         methods   : {
             async onClickReset() {
-                this.findFileKeys = await this.getFindFileKeys();
-                this.findCodeKeys = await this.getFindCodeKeys();
+                const hotkeys         = await this.getHotkeys();
+                this.findFileKeys     = hotkeys.findFileKeys;
+                this.findCodeKeys     = hotkeys.findCodeKeys;
+                this.recentlyRepoKeys = hotkeys.recentlyRepoKeys;
             },
             async onClickSave() {
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
-                const hotkeys    = new Hotkeys(this.findCodeKeys, this.findFileKeys);
+                const hotkeys    = new Hotkeys(this.findCodeKeys, this.findFileKeys, this.recentlyRepoKeys);
                 await hotkeyRepo.save(hotkeys);
 
                 this.saveSuccessAlertCountDown = 5;
             },
-            async getFindCodeKeys() {
+            async getHotkeys() {
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
-                return (await hotkeyRepo.get()).findCodeKeys;
-            },
-            async getFindFileKeys() {
-                const hotkeyRepo = container.resolve('IHotkeyRepository');
-                return (await hotkeyRepo.get()).findFileKeys;
+                return await hotkeyRepo.get();
             },
             async onResetFindCodeKeys() {
-                this.findCodeKeys = await this.getFindCodeKeys();
+                const hotkeys     = await this.getHotkeys();
+                this.findCodeKeys = hotkeys.findCodeKeys;
             },
             async onResetFindFileKeys() {
-                this.findFileKeys = await this.getFindFileKeys();
+                const hotkeys     = await this.getHotkeys();
+                this.findFileKeys = hotkeys.findFileKeys;
+            },
+            async onResetRecentlyRepoKeys() {
+                const hotkeys         = await this.getHotkeys();
+                this.recentlyRepoKeys = hotkeys.recentlyRepoKeys;
             },
             onCountDown(newCount) {
                 this.saveSuccessAlertCountDown = newCount;
