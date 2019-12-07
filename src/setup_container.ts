@@ -15,6 +15,7 @@ import {HotkeyRepository} from "./Infrastructure/Repositories/HotkeyRepository";
 import {RepoAccessHistoryRepository} from "./Infrastructure/Repositories/RepoAccessHistoryRepository";
 import {Storage} from "./Infrastructure/Repositories/Storage";
 import {DelegateStorage} from "./Infrastructure/Repositories/DelegateStorage";
+import {FuzzyMatcher} from "./Application/Services/FuzzyMatcher";
 
 const isInTest = typeof global.it === 'function';
 
@@ -26,9 +27,10 @@ container.register("PageContextDetector", {useClass: PageContextDetector});
 container.register("AppInitializationInteractor", {useClass: AppInitializationInteractor});
 container.register("StateProvider", {useClass: StateProvider});
 container.register("KeyDetector", {useClass: KeyDetector});
+container.register("FuzzyMatcher", {useClass: FuzzyMatcher});
 
 // Infrastructure Layer
-const enableChromeStorage = ('storage' in chrome) && ('local' in chrome.storage);
+const enableChromeStorage = !isInTest && ('storage' in chrome) && ('local' in chrome.storage);
 container.register("IStorage", {useClass: enableChromeStorage ? Storage : DelegateStorage});
 container.register("ISearchFileNameRepository", {useClass: SearchFileNameRepository});
 container.register("IUrlRepository", {useClass: UrlRepository});

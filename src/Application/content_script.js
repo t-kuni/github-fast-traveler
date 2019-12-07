@@ -29,6 +29,7 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 		const repo = pageContext.getRepoName();
         histories = histories.addHistory(new RepoAccessHistory(user, repo));
 
+        console.log('content_script#histories', histories);
 		historyRepo.save(histories);
 	})();
 }

@@ -2,12 +2,19 @@
     <div>
         <b-modal id="repo-find-modal" :static="true" centered title="Find Repositories" size="lg">
 
+            <b-form-group label="Search Keyword:"
+                          label-cols="2"
+                          label-for="search-keyword-input">
+                <b-input id="search-keyword-input"
+                         v-model="searchWord">
+                </b-input>
+            </b-form-group>
 
-            <div>Recently access repositories</div>
-
-            <div v-for="history in histories">
-                {{history}}
-            </div>
+            <b-list-group>
+                <b-list-group-item v-for="history in histories" :key="history.toString()">
+                    {{history}}
+                </b-list-group-item>
+            </b-list-group>
         </b-modal>
     </div>
 </template>
@@ -26,10 +33,6 @@
                 const historyRepo = container.resolve('IRepoAccessHistoryRepository');
                 let histories = (await historyRepo.get()).items();
 
-                if (histories === null) {
-                    histories = [];
-                }
-
                 const store = container.resolve('Store');
                 store.commit(MUTATION.SET_REPO_ACCESS_HISTORIES, {
                     histories,
@@ -41,12 +44,22 @@
         data      : function () {
             return {
                 GETTERS,
+                STATE,
+                searchWord: '',
             }
         },
         computed  : {
             histories() {
-                return this.$store.state[STATE.REPO_ACCESS_HISTORIES];
-            }
+                return this.$store.getters[GETTERS.REPO_ACCESS_HISTORIES_FILTERED];
+            },
+        },
+        watch: {
+          searchWord(val) {
+              console.log(this.searchWord);
+              this.$store.commit(MUTATION.SET_REPO_FIND_MODAL_SEARCH_WORD, {
+                  searchWord: this.searchWord
+              })
+          }
         },
         methods   : {
         }
