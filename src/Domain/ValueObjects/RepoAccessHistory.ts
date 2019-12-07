@@ -29,4 +29,8 @@ export default class RepoAccessHistory {
         return this.userName === history.userName
             && this.repoName === history.repoName;
     }
+
+    public link() {
+        return 'https://github.com/' + this.userName + '/' + this.repoName;
+    }
 }

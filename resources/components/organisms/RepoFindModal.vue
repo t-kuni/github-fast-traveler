@@ -6,13 +6,13 @@
                           label-cols="2"
                           label-for="search-keyword-input">
                 <b-input id="search-keyword-input"
-                         v-model="searchWord">
+                         v-model="searchWord" ref="searchWordInput">
                 </b-input>
             </b-form-group>
 
             <b-list-group>
                 <b-list-group-item v-for="history in histories" :key="history.toString()">
-                    {{history}}
+                    <a :href="history.link()">{{history}}</a>
                 </b-list-group-item>
             </b-list-group>
         </b-modal>
@@ -31,12 +31,15 @@
         mounted() {
             this.$root.$on('bv::modal::show', async (bvEvent, modalId) => {
                 const historyRepo = container.resolve('IRepoAccessHistoryRepository');
-                let histories = (await historyRepo.get()).items();
 
-                const store = container.resolve('Store');
-                store.commit(MUTATION.SET_REPO_ACCESS_HISTORIES, {
-                    histories,
+                this.$store.commit(MUTATION.SET_REPO_ACCESS_HISTORIES, {
+                    histories: (await historyRepo.get()).items(),
                 });
+                this.searchWord = '';
+
+                setTimeout(() => {
+                    this.$refs.searchWordInput.select();
+                }, 100);
             })
         },
         props     : {
