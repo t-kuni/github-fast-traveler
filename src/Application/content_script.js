@@ -27,7 +27,7 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 
 		const user = pageContext.getRepoOwnerName();
 		const repo = pageContext.getRepoName();
-		histories.items().push(new RepoAccessHistory(user, repo));
+        histories = histories.addHistory(new RepoAccessHistory(user, repo));
 
 		historyRepo.save(histories);
 	})();

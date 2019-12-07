@@ -24,4 +24,9 @@ export default class RepoAccessHistory {
     public toString() {
         return this.userName + '/' + this.repoName;
     }
+
+    match(history:RepoAccessHistory): boolean {
+        return this.userName === history.userName
+            && this.repoName === history.repoName;
+    }
 }

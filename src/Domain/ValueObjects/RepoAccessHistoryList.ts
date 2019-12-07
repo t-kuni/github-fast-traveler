@@ -28,4 +28,11 @@ export default class RepoAccessHistoryList {
     public items(): Array<RepoAccessHistory> {
         return this._items;
     }
+
+    addHistory(history: RepoAccessHistory): RepoAccessHistoryList {
+        const histories = this._items.filter(h => !h.match(history));
+        histories.unshift(history);
+
+        return new RepoAccessHistoryList(histories);
+    }
 }
