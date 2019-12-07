@@ -2,6 +2,7 @@ import RepoAccessHistory from "../../Domain/ValueObjects/RepoAccessHistory";
 import {IRepoAccessHistoryRepository} from "./interfaces/IRepoAccessHistoryRepository";
 import {inject, injectable} from "tsyringe";
 import {IStorage} from "./interfaces/IStorage";
+import RepoAccessHistoryList from "../../Domain/ValueObjects/RepoAccessHistoryList";
 
 @injectable()
 export class RepoAccessHistoryRepository implements IRepoAccessHistoryRepository {
@@ -15,17 +16,21 @@ export class RepoAccessHistoryRepository implements IRepoAccessHistoryRepository
         return 'chrome_extension:github_fast_traveler:repo_access_history';
     }
 
-    save(history: Array<RepoAccessHistory>): void {
+    save(histories: RepoAccessHistoryList): void {
         const key = this.key();
-        const value = history.map((h: RepoAccessHistory) => h.toJSON());
+        const value = histories.toJSON();
 
         this.storage.set(key, value);
     }
 
-    async get(): Promise<Array<RepoAccessHistory>> {
+    async get(): Promise<RepoAccessHistoryList> {
         const result = await this.storage.get(this.key());
 
-        return result.map((r) => RepoAccessHistory.fromJSON(r));
+        if (result === null) {
+            return new RepoAccessHistoryList([]);
+        }
+
+        return RepoAccessHistoryList.fromJSON(result);
     }
 
     async has(): Promise<boolean> {

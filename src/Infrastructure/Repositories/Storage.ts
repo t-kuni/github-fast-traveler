@@ -14,6 +14,12 @@ export class Storage implements IStorage {
     get(key: string): Promise<any> {
         return new Promise((resolve, reject) => {
             chrome.storage.local.get(key, (result) => {
+
+                if (!(key in result)) {
+                    resolve(null);
+                    return;
+                }
+
                 resolve(result[key]);
             });
         });

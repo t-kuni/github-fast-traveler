@@ -55,13 +55,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }).$mount('#popup-root');
 	});
 });
-
-const hotkeyRepo = container.resolve('IHotkeyRepository');
-hotkeyRepo.has().then(async has => {
-    if (has) {
-        return;
-    }
-
-    const hotkey = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
-    await hotkeyRepo.save(hotkey);
-});

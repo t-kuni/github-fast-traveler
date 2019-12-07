@@ -25,13 +25,9 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 	(async () => {
 		let histories = await historyRepo.get();
 
-		if (histories === null) {
-			histories = [];
-		}
-
 		const user = pageContext.getRepoOwnerName();
 		const repo = pageContext.getRepoName();
-		histories.push(new RepoAccessHistory(1, user, repo));
+		histories.items().push(new RepoAccessHistory(user, repo));
 
 		historyRepo.save(histories);
 	})();

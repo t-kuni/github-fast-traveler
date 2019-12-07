@@ -24,7 +24,7 @@
         mounted() {
             this.$root.$on('bv::modal::show', async (bvEvent, modalId) => {
                 const historyRepo = container.resolve('IRepoAccessHistoryRepository');
-                let histories = await historyRepo.get();
+                let histories = (await historyRepo.get()).items();
 
                 if (histories === null) {
                     histories = [];

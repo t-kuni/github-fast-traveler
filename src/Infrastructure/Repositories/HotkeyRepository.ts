@@ -26,10 +26,10 @@ export class HotkeyRepository implements IHotkeyRepository {
     async get(): Promise<Hotkeys> {
         const result = await this.storage.get(this.key());
 
-        return Hotkeys.fromJSON(result);
-    }
+        if (result === null) {
+            return new Hotkeys('ctrl+shift+f', 'ctrl+shift+p', 'ctrl+shift+s');
+        }
 
-    async has(): Promise<boolean> {
-        return (await this.get()) !== null;
+        return Hotkeys.fromJSON(result);
     }
 }
