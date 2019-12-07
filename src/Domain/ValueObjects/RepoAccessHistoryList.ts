@@ -2,6 +2,8 @@ import RepoAccessHistory from "./RepoAccessHistory";
 
 type Version = 1; // if increment version then add ' | 2 | 3 ...'
 
+const LIMIT = 30;
+
 export default class RepoAccessHistoryList {
     private version: Version;
     private _items: Array<RepoAccessHistory>;
@@ -33,6 +35,6 @@ export default class RepoAccessHistoryList {
         const histories = this._items.filter(h => !h.match(history));
         histories.unshift(history);
 
-        return new RepoAccessHistoryList(histories);
+        return new RepoAccessHistoryList(histories.slice(0, LIMIT));
     }
 }
