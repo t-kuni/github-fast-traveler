@@ -1,5 +1,5 @@
 import {inject, injectable} from "tsyringe";
-import keyMap from "../Utils/keyMap";
+import keyMap from "../../Utils/key_map";
 
 @injectable()
 export class KeyDetector {
