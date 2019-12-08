@@ -1,6 +1,7 @@
 <template>
     <div>
-        <b-modal id="repo-find-modal" :static="true" centered title="Repository Access Histories" size="lg">
+        <b-modal id="repo-find-modal" :static="true" centered title="Repository Access Histories" size="lg"
+            :hide-footer="true">
 
             <b-form-group label="Search Keyword:"
                           label-cols="2"
