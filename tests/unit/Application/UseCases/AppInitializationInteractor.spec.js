@@ -1,4 +1,4 @@
-import "../../../../src/Application/setup-container";
+import "../../../../src/setup_container";
 import {container} from "tsyringe";
 import {STATE} from "../../../../src/Application/state";
 import {setupStore} from "../../../../src/Application/store";

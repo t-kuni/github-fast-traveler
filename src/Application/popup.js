@@ -1,4 +1,4 @@
-import './setup-container';
+import '../setup_container';
 import Vue from 'vue';
 import Popup from '../../resources/components/Popup';
 import BootstrapVue from 'bootstrap-vue';
@@ -55,26 +55,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }).$mount('#popup-root');
 	});
 });
-
-const hotkeyRepo = container.resolve('IHotkeyRepository');
-hotkeyRepo.has().then(async has => {
-    if (has) {
-        return;
-    }
-
-    const hotkey = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
-    await hotkeyRepo.save(hotkey);
-});
-
-function onClickHelloWorld()
-{
-    const request = {
-        msg: 'hello world',
-    };
-
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, request, function(response) {
-            alert(response);
-        })
-    })
-}

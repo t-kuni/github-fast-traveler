@@ -1,4 +1,4 @@
-import './setup-container';
+import '../setup_container';
 import Vue from 'vue';
 import Embedded from '../../resources/components/Embedded';
 import BootstrapVue from 'bootstrap-vue';
@@ -6,8 +6,9 @@ import '../../resources/scss/embedded.scss';
 import hotkeys from 'hotkeys-js';
 import {container} from "tsyringe";
 import {setupStore} from './store';
-import {dispatchEvent, listenEvent} from "./event-util";
+import {dispatchEvent, listenEvent} from "../events";
 import Hotkeys from "../Domain/ValueObjects/Hotkeys";
+import {MUTATION} from "./mutations";
 
 //
 // View Setup
@@ -21,7 +22,7 @@ document.body.appendChild(rootElem);
 
 const vm = new Vue({
     render: h => h(Embedded),
-    state: setupStore(),
+    store: setupStore(),
 }).$mount('#' + rootElemID);
 
 //
@@ -39,8 +40,8 @@ if (pageContext.isFileFindPage()) {
     interactor.onOpen();
 }
 
-listenEvent("on_loaded_hotkeys", () => {
-    let hotkeyData = event.data.payload;
+listenEvent("on_loaded_hotkeys", (payload) => {
+    let hotkeyData = payload;
 
     if (hotkeyData === null) {
         hotkeyData = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
@@ -57,6 +58,12 @@ listenEvent("on_loaded_hotkeys", () => {
 
         const interactor = container.resolve('FileFindingInteractor');
         interactor.find();
+    });
+
+    hotkeys(hotkeyData.recentlyRepoKeys, function(event, handler){
+        event.preventDefault();
+
+        vm.$bvModal.show('repo-find-modal');
     });
 });
 

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from "vuex";
-import * as baseState from "./state";
+import {default as baseState} from "./state";
 import mutations from "./mutations";
 import getters from "./getters";
 import {container} from "tsyringe";
