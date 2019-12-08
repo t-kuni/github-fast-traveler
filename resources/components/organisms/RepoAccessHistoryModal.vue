@@ -10,7 +10,7 @@
                 </b-input>
             </b-form-group>
 
-            <b-list-group>
+            <b-list-group class="history-area">
                 <b-list-group-item v-for="history in histories" :key="history.toString()">
                     <a :href="history.link()">{{history}}</a>
                 </b-list-group-item>
@@ -70,4 +70,22 @@
 </script>
 
 <style lang="scss" scoped>
+    .history-area {
+        max-height: 400px;
+        overflow-y: scroll;
+        border-top: 1px solid rgba(0, 0, 0, 0.125);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+        .list-group-item {
+            border-radius: 0!important;
+        }
+
+        .list-group-item:first-child {
+            border-top: none;
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+    }
 </style>
