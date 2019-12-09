@@ -1,31 +1,42 @@
 # About
 
-This repository is skeleton of chrome extension.
+Github Fast Traveler is chrome extension, providing contents search experience like IDE when you browse the Github.
 
-# Usage
+# Features
+
+* Provide shortcut keys to popup some useful Dialog for moving between repositories or code on github.
+* Customize shortcut keys.
+
+# Installation on Chrome 
+
+[Install from Webstore](https://chrome.google.com/webstore/detail/github-fast-traveler/pmdkekjlfomldobcjoochbdfpdfhkdna)
+
+# Development Build
 
 
 ```
-git clone --depth 1 ssh://git@github.com/t-kuni/chrome-extension-skeleton [ProjectName]
-cd [ProjectName]
-rm -rf .git 
 npm install
-npm run dev
-# or `npm run watch`
+npm run manifest
+npm run watch
 ```
 
-# Enable extension for testing
+# Enable extension for development
 
-1.Open chrome extension tab.
+1.Build this extension.
+
+2.Open chrome extension tab.
 
 ```
 chrome://extensions
 ```
 
-2.Load this folder from `load unpacked` button.
+3.Load this folder from `load unpacked` button.
 
-3.Make sure to be shown button of this extension in extension bar of top right of window.
+4.Make sure to be shown button of this extension in extension bar of top right of window.
 
-# Release build
 
- 
+# Release Build
+
+```
+npm run release
+```
