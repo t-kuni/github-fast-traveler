@@ -39,7 +39,7 @@
     "github-api": "^3.3.0",
     "hotkeys-js": "^3.7.2",
     "inject-loader": "^4.0.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mocha": "^6.2.2",
     "mochapack": "^1.1.11",
     "node-sass": "^4.13.0",
