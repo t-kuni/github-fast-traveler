@@ -7,13 +7,13 @@
                 </b-col>
             </b-row>
 
-            <b-tabs content-class="mt-3">
+            <b-tabs content-class="mt-3" @activate-tab="onActiveTab">
                 <b-tab title="Find Code" active>
-                    <code-find-form></code-find-form>
+                    <code-find-form ref="codeFindForm"></code-find-form>
                 </b-tab>
 
-                <b-tab title="Find File" active>
-                    <file-find-form></file-find-form>
+                <b-tab title="Find File">
+                    <file-find-form ref="fileFindForm"></file-find-form>
                 </b-tab>
 
                 <b-tab title="Settings">
@@ -81,6 +81,7 @@
             (async () => {
                 const hotkeys       = await this.getHotkeys();
                 this.fastTravelKeys = hotkeys.fastTravelKeys;
+                this.$refs.codeFindForm.onShow();
             })();
         },
         props     : {},
@@ -124,7 +125,20 @@
             },
             onCountDown(newCount) {
                 this.saveSuccessAlertCountDown = newCount;
-            }
+            },
+            onActiveTab(newTabIdx) {
+                const content = this.getTabContent(newTabIdx);
+                if (content) {
+                    content.onShow();
+                }
+            },
+            getTabContent(tabIdx) {
+                switch (tabIdx) {
+                    case 0: return this.$refs.codeFindForm;
+                    case 1: return this.$refs.fileFindForm;
+                    default: return null;
+                }
+            },
         }
     }
 </script>

@@ -66,21 +66,15 @@
     export default {
         components: {},
         async mounted() {
-            this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
-                this.searchWord = this.pageContext.getSelectingText();
+            this.searchWord = this.pageContext.getSelectingText();
 
-                if (this.pageContext.hasRepoName()) {
-                    this.searchType = 'current-repo';
-                } else if (this.pageContext.hasRepoOwnerName()) {
-                    this.searchType = 'current-user';
-                } else {
-                    this.searchType = 'all';
-                }
-
-                setTimeout(() => {
-                    this.$refs.searchWordInput.select();
-                }, 100);
-            })
+            if (this.pageContext.hasRepoName()) {
+                this.searchType = 'current-repo';
+            } else if (this.pageContext.hasRepoOwnerName()) {
+                this.searchType = 'current-user';
+            } else {
+                this.searchType = 'all';
+            }
 
             this.loginName = await this.pageContext.getLoginName();
         },
@@ -109,6 +103,11 @@
             onClickFind() {
                 this.fileFindingInteractor.find(this.searchType, this.searchWord);
             },
+            onShow() {
+                setTimeout(() => {
+                    this.$refs.searchWordInput.select();
+                }, 100);
+            }
         }
     }
 </script>

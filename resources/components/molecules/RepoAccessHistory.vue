@@ -4,7 +4,9 @@
                       label-cols="2"
                       label-for="search-keyword-input">
             <b-input id="search-keyword-input"
-                     v-model="searchWord" ref="searchWordInput">
+                     placeholder="Enter search word"
+                     v-model="searchWord"
+                     ref="searchWordInput">
             </b-input>
         </b-form-group>
 
@@ -32,13 +34,8 @@
                 histories: (await historyRepo.get()).items(),
             });
             this.searchWord = '';
-
-            setTimeout(() => {
-                this.$refs.searchWordInput.select();
-            }, 100);
         },
-        props     : {
-        },
+        props     : {},
         data      : function () {
             return {
                 GETTERS,
@@ -51,14 +48,19 @@
                 return this.$store.getters[GETTERS.REPO_ACCESS_HISTORIES_FILTERED];
             },
         },
-        watch: {
-          searchWord(val) {
-              this.$store.commit(MUTATION.SET_REPO_FIND_MODAL_SEARCH_WORD, {
-                  searchWord: this.searchWord
-              })
-          }
+        watch     : {
+            searchWord(val) {
+                this.$store.commit(MUTATION.SET_REPO_FIND_MODAL_SEARCH_WORD, {
+                    searchWord: this.searchWord
+                })
+            },
         },
         methods   : {
+            onShow() {
+                setTimeout(() => {
+                    this.$refs.searchWordInput.select();
+                }, 100);
+            }
         }
     }
 </script>
@@ -71,7 +73,7 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 
         .list-group-item {
-            border-radius: 0!important;
+            border-radius: 0 !important;
         }
 
         .list-group-item:first-child {

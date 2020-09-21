@@ -16,16 +16,16 @@ export class CodeFindingInteractor {
     async find(searchType: string, searchWord: string, extension: string): Promise<null> {
         switch (searchType) {
             case 'all':
-                this.urlRepo.save(this.buildUrlInAll(searchWord));
+                this.urlRepo.save(this.buildUrlInAll(searchWord, extension));
                 break;
             case 'current-user':
-                this.urlRepo.save(this.buildUrlInCurrentUser(searchWord));
+                this.urlRepo.save(this.buildUrlInCurrentUser(searchWord, extension));
                 break;
             case 'current-repo':
-                this.urlRepo.save(this.buildUrlInCurrentRepo(searchWord));
+                this.urlRepo.save(this.buildUrlInCurrentRepo(searchWord, extension));
                 break;
             case 'my-repo':
-                this.urlRepo.save(await this.buildUrlInMyRepo(searchWord));
+                this.urlRepo.save(await this.buildUrlInMyRepo(searchWord, extension));
                 break;
         }
     }
