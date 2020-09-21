@@ -14,8 +14,8 @@ import {KeyDetector} from "./Application/Services/KeyDetector";
 import {HotkeyRepository} from "./Infrastructure/Repositories/HotkeyRepository";
 import {RepoAccessHistoryRepository} from "./Infrastructure/Repositories/RepoAccessHistoryRepository";
 import {Storage} from "./Infrastructure/Repositories/Storage";
-import {DelegateStorage} from "./Infrastructure/Repositories/DelegateStorage";
 import {FuzzyMatcher} from "./Application/Services/FuzzyMatcher";
+import {UserNameRepository} from "./Infrastructure/Repositories/UserNameRepository";
 
 const isInTest = typeof global.it === 'function';
 
@@ -30,11 +30,11 @@ container.register("KeyDetector", {useClass: KeyDetector});
 container.register("FuzzyMatcher", {useClass: FuzzyMatcher});
 
 // Infrastructure Layer
-const enableChromeStorage = !isInTest && ('storage' in chrome) && ('local' in chrome.storage);
-container.register("IStorage", {useClass: enableChromeStorage ? Storage : DelegateStorage});
+container.register("IStorage", {useClass: Storage });
 container.register("ISearchFileNameRepository", {useClass: SearchFileNameRepository});
 container.register("IUrlRepository", {useClass: UrlRepository});
 container.register("IDomAdapter", {useClass: DomAdapter});
 container.register("IGithubApiAdapter", {useClass: GithubApiAdapter});
 container.register("IHotkeyRepository", {useClass: HotkeyRepository});
 container.register("IRepoAccessHistoryRepository", {useClass: RepoAccessHistoryRepository});
+container.register("IUserNameRepository", {useClass: UserNameRepository});

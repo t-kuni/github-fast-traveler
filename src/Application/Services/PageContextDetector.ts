@@ -1,9 +1,10 @@
 import {inject, injectable} from "tsyringe";
 import {IUrlRepository} from "../../Infrastructure/Repositories/interfaces/IUrlRepository";
 import {IDomAdapter} from "../../Infrastructure/Adapters/interfaces/IDomAdapter";
+import {IPageContextDetector} from "./interfaces/IPageContextDetector";
 
 @injectable()
-export class PageContextDetector {
+export class PageContextDetector implements IPageContextDetector {
     private urlRepo: IUrlRepository;
     private domAdapter: IDomAdapter;
 
@@ -43,11 +44,11 @@ export class PageContextDetector {
         return this.getRepoOwnerName() !== null;
     }
 
-    getLoginName() {
+    async getLoginName() {
         return this.domAdapter.getLoginUserName();
     }
 
-    hasLoginName() {
+    async hasLoginName() {
         return this.getLoginName() !== null;
     }
 

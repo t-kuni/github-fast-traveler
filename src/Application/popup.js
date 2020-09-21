@@ -4,7 +4,12 @@ import Popup from '../../resources/components/Popup';
 import BootstrapVue from 'bootstrap-vue';
 import '../../resources/scss/popup.scss';
 import {container} from "tsyringe";
-import Hotkeys from "../Domain/ValueObjects/Hotkeys";
+import {PopupPageContextDetector} from "./Services/PopupPageContextDetector";
+
+//
+// Setup Service Container
+//
+container.register("PageContextDetector", {useClass: PopupPageContextDetector });
 
 Vue.use(BootstrapVue);
 

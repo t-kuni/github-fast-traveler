@@ -13,7 +13,7 @@ export class CodeFindingInteractor {
         this.pageContext = pageContext;
     }
 
-    find(searchType: string, searchWord: string) {
+    async find(searchType: string, searchWord: string): Promise<null> {
         switch (searchType) {
             case 'all':
                 this.urlRepo.save(this.buildUrlInAll(searchWord));
@@ -25,7 +25,7 @@ export class CodeFindingInteractor {
                 this.urlRepo.save(this.buildUrlInCurrentRepo(searchWord));
                 break;
             case 'my-repo':
-                this.urlRepo.save(this.buildUrlInMyRepo(searchWord));
+                this.urlRepo.save(await this.buildUrlInMyRepo(searchWord));
                 break;
         }
     }
@@ -47,8 +47,8 @@ export class CodeFindingInteractor {
         return this.buildUrl(query);
     }
 
-    private buildUrlInMyRepo(word:string) {
-        const user = this.pageContext.getLoginName();
+    private async buildUrlInMyRepo(word:string): Promise<string> {
+        const user = await this.pageContext.getLoginName();
         const query = `user:${user} ${word}`;
         return this.buildUrl(query);
     }

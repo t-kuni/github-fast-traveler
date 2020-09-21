@@ -4,6 +4,9 @@ import {dispatchEvent, listenEvent} from "../events";
 import RepoAccessHistory from "../Domain/ValueObjects/RepoAccessHistory";
 import {EVENT} from './../events'
 
+//
+// Inject Embedded Script
+//
 const scriptElem = document.createElement('script');
 scriptElem.src = chrome.runtime.getURL('dist/embedded_script.js');
 scriptElem.onload = function() {
@@ -11,13 +14,9 @@ scriptElem.onload = function() {
 };
 (document.head || document.documentElement).appendChild(scriptElem);
 
-listenEvent('on_loaded_embedded_script', () => {
-	const hotkeyRepo = container.resolve('IHotkeyRepository');
-	hotkeyRepo.get().then((hotkeys) => {
-		dispatchEvent("on_loaded_hotkeys", hotkeys);
-	});
-});
-
+//
+// Save Repo History
+//
 const historyRepo = container.resolve('IRepoAccessHistoryRepository');
 const pageContext = container.resolve('PageContextDetector');
 
@@ -29,13 +28,32 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 		const repo = pageContext.getRepoName();
         histories = histories.addHistory(new RepoAccessHistory(user, repo));
 
-        console.log('content_script#histories', histories);
 		historyRepo.save(histories);
 	})();
 }
 
+//
+// Save User Name
+//
+const userNameRepo = container.resolve('IUserNameRepository');
+Promise.all([userNameRepo.has(), pageContext.getLoginName()])
+	.then((results) => {
+		const [hasLoginName, loginName] = results;
+		console.log('hasLoginName', hasLoginName, 'loginName', loginName)
+		if (!hasLoginName && loginName) {
+			userNameRepo.save(loginName);
+		}
+	});
 
-
+//
+// Init Listener
+//
+listenEvent('on_loaded_embedded_script', () => {
+	const hotkeyRepo = container.resolve('IHotkeyRepository');
+	hotkeyRepo.get().then((hotkeys) => {
+		dispatchEvent("on_loaded_hotkeys", hotkeys);
+	});
+});
 listenEvent(EVENT.GET_STORAGE, (payload) => {
 	chrome.storage.local.get(payload.key, (result) => {
 		dispatchEvent(payload.listenerID, result);
@@ -46,3 +64,8 @@ listenEvent(EVENT.SET_STORAGE, (payload) => {
 		dispatchEvent(payload.listenerID, result);
 	});
 });
+
+function saveUserName()
+{
+
+}

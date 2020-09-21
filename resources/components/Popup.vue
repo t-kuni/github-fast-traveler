@@ -7,14 +7,16 @@
                 </b-col>
             </b-row>
 
-            <b-row>
-                <b-col col="12">
-                    <h2>Shortcut settings</h2>
-                </b-col>
-            </b-row>
+            <b-tabs content-class="mt-3">
+                <b-tab title="Find Code" active>
+                    <code-find-form></code-find-form>
+                </b-tab>
 
-            <b-row class="shortcut-setting-area">
-                <b-col col="12">
+                <b-tab title="Settings">
+                    <h2>General</h2>
+                    <user-name-form></user-name-form>
+
+                    <h2>Shortcuts</h2>
                     <b-form>
                         <b-form-group label="Find Code:"
                                       label-cols="3"
@@ -55,23 +57,23 @@
                                 <b-button variant="success" @click="onClickSave" :disabled="invalidForm">Save</b-button>
                             </b-col>
                         </b-row>
-                    </b-form>
-                </b-col>
-            </b-row>
 
-            <b-row class="alert-area">
-                <b-col col="12">
-                    <b-alert
-                            :show="saveSuccessAlertCountDown"
-                            dismissible
-                            variant="success"
-                            @dismissed="saveSuccessAlertCountDown=0"
-                            @dismiss-count-down="onCountDown"
-                    >
-                        Save successfully.
-                    </b-alert>
-                </b-col>
-            </b-row>
+                        <b-row class="mt-2">
+                            <b-col col="12">
+                                <b-alert
+                                        :show="saveSuccessAlertCountDown"
+                                        dismissible
+                                        variant="success"
+                                        @dismissed="saveSuccessAlertCountDown=0"
+                                        @dismiss-count-down="onCountDown"
+                                >
+                                    Save successfully.
+                                </b-alert>
+                            </b-col>
+                        </b-row>
+                    </b-form>
+                </b-tab>
+            </b-tabs>
         </b-container>
     </div>
 </template>
@@ -80,9 +82,11 @@
     import HotkeyInput from './atoms/HotkeyInput';
     import {container} from 'tsyringe';
     import Hotkeys from "../../src/Domain/ValueObjects/Hotkeys";
+    import CodeFindForm from "./molecules/CodeFindForm";
+    import UserNameForm from "./molecules/UserNameForm";
 
     export default {
-        components: {HotkeyInput},
+        components: {UserNameForm, CodeFindForm, HotkeyInput},
         mounted() {
             (async () => {
                 const hotkeys         = await this.getHotkeys();
@@ -169,26 +173,6 @@
     .header-area {
         img {
             width: 64px;
-        }
-    }
-
-    .alert-area {
-        margin-top: 15px;
-    }
-
-    .shortcut-setting-area {
-        margin-top: 10px;
-
-        .last-form-group {
-            margin-bottom: 0;
-        }
-
-        .notification-area {
-            text-align: right;
-        }
-
-        .buttons-area {
-            margin-top: 15px;
         }
     }
 </style>

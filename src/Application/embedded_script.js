@@ -9,6 +9,12 @@ import {setupStore} from './store';
 import {dispatchEvent, listenEvent} from "../events";
 import Hotkeys from "../Domain/ValueObjects/Hotkeys";
 import {MUTATION} from "./mutations";
+import {DelegateStorage} from "../Infrastructure/Repositories/DelegateStorage";
+
+//
+// Setup Service Container
+//
+container.register("IStorage", {useClass: DelegateStorage });
 
 //
 // View Setup
