@@ -11,7 +11,7 @@
 
         <b-row class="buttons-area">
             <b-col col="12">
-                <b-button variant="success" @click="onClickSave">Save</b-button>
+                <b-button variant="primary" @click="onClickSave">Save</b-button>
             </b-col>
         </b-row>
 
@@ -20,7 +20,7 @@
                 <b-alert
                         :show="saveSuccessAlertCountDown"
                         dismissible
-                        variant="success"
+                        variant="primary"
                         @dismissed="saveSuccessAlertCountDown=0"
                         @dismiss-count-down="onCountDown"
                 >

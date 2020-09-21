@@ -26,22 +26,23 @@
                                       label-cols="3"
                                       label-for="fast-travel-keys-input"
                                       :invalid-feedback="invalidFastTravelKeys"
-                                      :state="!invalidFastTravelKeys">
+                                      :state="!invalidFastTravelKeys"
+                                      class="mb-0">
                             <hotkey-input id="fast-travel-keys-input" v-model="fastTravelKeys"
                                           @reset="onResetFastTravelKeys"></hotkey-input>
                         </b-form-group>
 
-                        <b-row class="notification-area">
+                        <b-row>
                             <b-col col="12">
                                 <small class="text-muted">If you want to clear a shortcut then pressing escape key or
                                     backspace key.</small>
                             </b-col>
                         </b-row>
 
-                        <b-row class="buttons-area">
+                        <b-row class="mt-2">
                             <b-col col="12">
                                 <b-button variant="outline-secondary" @click="onClickReset">Reset</b-button>
-                                <b-button variant="success" @click="onClickSave" :disabled="invalidForm">Save</b-button>
+                                <b-button variant="primary" @click="onClickSave" :disabled="invalidForm">Save</b-button>
                             </b-col>
                         </b-row>
 
@@ -50,7 +51,7 @@
                                 <b-alert
                                         :show="saveSuccessAlertCountDown"
                                         dismissible
-                                        variant="success"
+                                        variant="primary"
                                         @dismissed="saveSuccessAlertCountDown=0"
                                         @dismiss-count-down="onCountDown"
                                 >

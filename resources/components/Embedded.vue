@@ -1,5 +1,5 @@
 <template>
-    <div class="chrome-extension-github-fast-traveler">
+    <div id="chrome-extension-github-fast-traveler">
         <div>
             <fast-travel-modal></fast-travel-modal>
         </div>
