@@ -18,7 +18,6 @@ export default {
         const needle = state[STATE.REPO_FIND_MODAL_SEARCH_WORD];
         const histories = state[STATE.REPO_ACCESS_HISTORIES];
 
-        console.log('getters#REPO_ACCESS_HISTORIES_FILTERED', needle, histories);
         return histories.filter(h => matcher.match(needle, h.toString()));
     },
 }

@@ -14,7 +14,6 @@ export default {
         state[STATE.CURRENT_REPO_DETAIL] = payload.repoDetail;
     },
     [MUTATION.SET_REPO_ACCESS_HISTORIES]: (state, payload) => {
-        console.log('mutations#SET_REPO_ACCESS_HISTORIES', payload);
         Vue.set(state, STATE.REPO_ACCESS_HISTORIES, payload.histories);
         Vue.set(state, STATE.REPO_ACCESS_HISTORIES_FILTERED, payload.histories);
     },

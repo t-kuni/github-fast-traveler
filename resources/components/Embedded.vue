@@ -1,20 +1,18 @@
 <template>
     <div class="chrome-extension-github-fast-traveler">
         <div>
-            <code-find-modal></code-find-modal>
-            <repo-access-history-modal></repo-access-history-modal>
+            <fast-travel-modal></fast-travel-modal>
         </div>
     </div>
 </template>
 
 <script>
-    import CodeFindModal from "./organisms/CodeFindModal.vue";
-    import RepoAccessHistoryModal from "./organisms/RepoAccessHistoryModal";
+    import FastTravelModal from "./organisms/FastTravelModal.vue";
 
     export default {
         mounted() {
         },
-        components: {RepoAccessHistoryModal, CodeFindModal},
+        components: {FastTravelModal},
         mounted() {
         },
         props     : {

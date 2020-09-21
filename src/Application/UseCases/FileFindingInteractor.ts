@@ -22,14 +22,13 @@ export class FileFindingInteractor {
         this.pageContext = pageContext;
     }
 
-    find() {
+    find(searchWord: string) {
         if (!this.pageContext.hasRepoOwnerName() || !this.pageContext.hasRepoName()) {
             return;
         }
 
-        const selectedText = this.pageContext.getSelectingText();
-        if (selectedText.length > 0) {
-            this.fileNameRepo.save(selectedText);
+        if (searchWord.length > 0) {
+            this.fileNameRepo.save(searchWord);
         } else {
             this.fileNameRepo.clear();
         }

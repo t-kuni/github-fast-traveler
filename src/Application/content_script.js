@@ -39,7 +39,6 @@ const userNameRepo = container.resolve('IUserNameRepository');
 Promise.all([userNameRepo.has(), pageContext.getLoginName()])
 	.then((results) => {
 		const [hasLoginName, loginName] = results;
-		console.log('hasLoginName', hasLoginName, 'loginName', loginName)
 		if (!hasLoginName && loginName) {
 			userNameRepo.save(loginName);
 		}

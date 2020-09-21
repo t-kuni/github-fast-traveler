@@ -16,32 +16,15 @@
                     <h2>General</h2>
                     <user-name-form></user-name-form>
 
-                    <h2>Shortcuts</h2>
+                    <h2>Shortcut</h2>
                     <b-form>
-                        <b-form-group label="Find Code:"
+                        <b-form-group label="Fast Travel:"
                                       label-cols="3"
-                                      label-for="find-code-keys-input"
-                                      :invalid-feedback="invalidFindCodeKeys"
-                                      :state="!invalidFindCodeKeys">
-                            <hotkey-input id="find-code-keys-input" v-model="findCodeKeys"
-                                          @reset="onResetFindCodeKeys"></hotkey-input>
-                        </b-form-group>
-                        <b-form-group label="Find File:"
-                                      label-cols="3"
-                                      label-for="find-file-keys-input"
-                                      :invalid-feedback="invalidFindFileKeys"
-                                      :state="!invalidFindFileKeys">
-                            <hotkey-input id="find-file-keys-input" v-model="findFileKeys"
-                                          @reset="onResetFindFileKeys"></hotkey-input>
-                        </b-form-group>
-                        <b-form-group class="last-form-group"
-                                      label="Recently Repo:"
-                                      label-cols="3"
-                                      label-for="recently-repo-keys-input"
-                                      :invalid-feedback="invalidRecentlyRepoKeys"
-                                      :state="!invalidRecentlyRepoKeys">
-                            <hotkey-input id="recently-repo-keys-input" v-model="recentlyRepoKeys"
-                                          @reset="onResetRecentlyRepoKeys"></hotkey-input>
+                                      label-for="fast-travel-keys-input"
+                                      :invalid-feedback="invalidFastTravelKeys"
+                                      :state="!invalidFastTravelKeys">
+                            <hotkey-input id="fast-travel-keys-input" v-model="fastTravelKeys"
+                                          @reset="onResetFastTravelKeys"></hotkey-input>
                         </b-form-group>
 
                         <b-row class="notification-area">
@@ -84,64 +67,43 @@
     import Hotkeys from "../../src/Domain/ValueObjects/Hotkeys";
     import CodeFindForm from "./molecules/CodeFindForm";
     import UserNameForm from "./molecules/UserNameForm";
+    import RepoAccessHistory from "./molecules/RepoAccessHistory";
 
     export default {
-        components: {UserNameForm, CodeFindForm, HotkeyInput},
+        components: {RepoAccessHistory, UserNameForm, CodeFindForm, HotkeyInput},
         mounted() {
             (async () => {
-                const hotkeys         = await this.getHotkeys();
-                this.findFileKeys     = hotkeys.findFileKeys;
-                this.findCodeKeys     = hotkeys.findCodeKeys;
-                this.recentlyRepoKeys = hotkeys.recentlyRepoKeys;
+                const hotkeys       = await this.getHotkeys();
+                this.fastTravelKeys = hotkeys.fastTravelKeys;
             })();
         },
         props     : {},
         data      : () => {
             return {
-                findFileKeys             : '',
-                findCodeKeys             : '',
-                recentlyRepoKeys         : '',
+                fastTravelKeys           : '',
                 saveSuccessAlertCountDown: 0,
             }
         },
         computed  : {
-            invalidFindCodeKeys() {
-                if (!this.findCodeKeys || this.findCodeKeys.length === 0) {
-                    return 'Enter at least 1 characters'
-                } else {
-                    return null;
-                }
-            },
-            invalidFindFileKeys() {
-                if (!this.findFileKeys || this.findFileKeys.length === 0) {
-                    return 'Enter at least 1 characters'
-                } else {
-                    return null;
-                }
-            },
-            invalidRecentlyRepoKeys() {
-                if (!this.recentlyRepoKeys || this.recentlyRepoKeys.length === 0) {
+            invalidFastTravelKeys() {
+                if (!this.fastTravelKeys || this.fastTravelKeys.length === 0) {
                     return 'Enter at least 1 characters'
                 } else {
                     return null;
                 }
             },
             invalidForm() {
-                return this.invalidFindCodeKeys !== null
-                    || this.invalidFindFileKeys !== null
-                    || this.invalidRecentlyRepoKeys !== null;
+                return this.invalidFastTravelKeys !== null;
             },
         },
         methods   : {
             async onClickReset() {
-                const hotkeys         = await this.getHotkeys();
-                this.findFileKeys     = hotkeys.findFileKeys;
-                this.findCodeKeys     = hotkeys.findCodeKeys;
-                this.recentlyRepoKeys = hotkeys.recentlyRepoKeys;
+                const hotkeys       = await this.getHotkeys();
+                this.fastTravelKeys = hotkeys.fastTravelKeys;
             },
             async onClickSave() {
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
-                const hotkeys    = new Hotkeys(this.findCodeKeys, this.findFileKeys, this.recentlyRepoKeys);
+                const hotkeys    = new Hotkeys(this.fastTravelKeys);
                 await hotkeyRepo.save(hotkeys);
 
                 this.saveSuccessAlertCountDown = 5;
@@ -150,17 +112,9 @@
                 const hotkeyRepo = container.resolve('IHotkeyRepository');
                 return await hotkeyRepo.get();
             },
-            async onResetFindCodeKeys() {
-                const hotkeys     = await this.getHotkeys();
-                this.findCodeKeys = hotkeys.findCodeKeys;
-            },
-            async onResetFindFileKeys() {
-                const hotkeys     = await this.getHotkeys();
-                this.findFileKeys = hotkeys.findFileKeys;
-            },
-            async onResetRecentlyRepoKeys() {
-                const hotkeys         = await this.getHotkeys();
-                this.recentlyRepoKeys = hotkeys.recentlyRepoKeys;
+            async onResetFastTravelKeys() {
+                const hotkeys       = await this.getHotkeys();
+                this.fastTravelKeys = hotkeys.fastTravelKeys;
             },
             onCountDown(newCount) {
                 this.saveSuccessAlertCountDown = newCount;

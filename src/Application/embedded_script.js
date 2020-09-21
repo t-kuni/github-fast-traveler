@@ -50,26 +50,13 @@ listenEvent("on_loaded_hotkeys", (payload) => {
     let hotkeyData = payload;
 
     if (hotkeyData === null) {
-        hotkeyData = new Hotkeys('ctrl+shift+f', 'ctrl+shift+p');
+        hotkeyData = new Hotkeys('ctrl+shift+f');
     }
 
-    hotkeys(hotkeyData.findCodeKeys, function(event, handler){
+    hotkeys(hotkeyData.fastTravelKeys, function(event, handler){
         event.preventDefault();
 
-        vm.$bvModal.show('code-find-modal');
-    });
-
-    hotkeys(hotkeyData.findFileKeys, function(event, handler){
-        event.preventDefault();
-
-        const interactor = container.resolve('FileFindingInteractor');
-        interactor.find();
-    });
-
-    hotkeys(hotkeyData.recentlyRepoKeys, function(event, handler){
-        event.preventDefault();
-
-        vm.$bvModal.show('repo-find-modal');
+        vm.$bvModal.show('fast-travel-modal');
     });
 });
 
