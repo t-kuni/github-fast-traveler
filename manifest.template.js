@@ -6,7 +6,7 @@ const baseManifest = {
   "name": "Github Fast Traveler",
   "short_name": "github-fast-traveler",
   "description": "This extension is provide contents search experience like IDE when you browse the Github.",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": "t-kuni",
 
   "browser_action": {
@@ -46,4 +46,4 @@ if (env === 'development') {
 }
 
 const json = JSON.stringify(manifest, null , "\t");
-fs.writeFileSync('manifest.json', json);
+fs.writeFileSync('manifest.json', json, {});
