@@ -6,7 +6,7 @@ const baseManifest = {
   "name": "Github Fast Traveler",
   "short_name": "github-fast-traveler",
   "description": "This extension is provide contents search experience like IDE when you browse the Github.",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "author": "t-kuni",
 
   "browser_action": {
