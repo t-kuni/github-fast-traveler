@@ -39,14 +39,20 @@
             </b-form-radio-group>
         </b-form-group>
 
-        <b-form-group
-                label="Find Keyword"
-        >
+        <b-form-group label="Find Keyword">
             <b-form-input
                     id="input-formatter"
                     v-model="searchWord"
                     placeholder="Enter search word"
                     ref="searchWordInput"
+                    @keydown.enter="onClickFind"
+            ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Filter Extension">
+            <b-form-input
+                    v-model="extension"
+                    placeholder="ex. css, js, html, php..."
                     @keydown.enter="onClickFind"
             ></b-form-input>
         </b-form-group>
@@ -94,6 +100,7 @@
                 searchWord: '',
                 searchType: 'all',
                 loginName: null,
+                extension: null,
             }
         },
         computed  : {
@@ -109,7 +116,7 @@
         },
         methods   : {
             onClickFind() {
-                this.codeFindingInteractor.find(this.searchType, this.searchWord);
+                this.codeFindingInteractor.find(this.searchType, this.searchWord, this.extension);
             },
         }
     }

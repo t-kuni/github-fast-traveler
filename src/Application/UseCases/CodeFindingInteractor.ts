@@ -13,7 +13,7 @@ export class CodeFindingInteractor {
         this.pageContext = pageContext;
     }
 
-    async find(searchType: string, searchWord: string): Promise<null> {
+    async find(searchType: string, searchWord: string, extension: string): Promise<null> {
         switch (searchType) {
             case 'all':
                 this.urlRepo.save(this.buildUrlInAll(searchWord));
@@ -30,27 +30,37 @@ export class CodeFindingInteractor {
         }
     }
 
-    private buildUrlInAll(word:string): string {
-        return this.buildUrl(word);
-    }
-
-    private buildUrlInCurrentUser(word:string) {
-        const user = this.pageContext.getRepoOwnerName();
-        const query = `user:${user} ${word}`;
+    private buildUrlInAll(word:string, ext:string): string {
+        const query = this.buildExt(ext) + word;
         return this.buildUrl(query);
     }
 
-    private buildUrlInCurrentRepo(word:string) {
+    private buildUrlInCurrentUser(word:string, ext:string) {
+        const user = this.pageContext.getRepoOwnerName();
+        const query = this.buildExt(ext) + `user:${user} ${word}`;
+        return this.buildUrl(query);
+    }
+
+    private buildUrlInCurrentRepo(word:string, ext:string) {
         const user = this.pageContext.getRepoOwnerName();
         const repo = this.pageContext.getRepoName();
-        const query = `repo:${user}/${repo} ${word}`;
+        const query = this.buildExt(ext) + `repo:${user}/${repo} ${word}`;
         return this.buildUrl(query);
     }
 
-    private async buildUrlInMyRepo(word:string): Promise<string> {
+    private async buildUrlInMyRepo(word:string, ext:string): Promise<string> {
         const user = await this.pageContext.getLoginName();
-        const query = `user:${user} ${word}`;
+        const query = this.buildExt(ext) + `user:${user} ${word}`;
         return this.buildUrl(query);
+    }
+
+    private buildExt(extension:string)
+    {
+        if (extension == null || extension == '') {
+            return '';
+        }
+
+        return `extension:${extension} `;
     }
 
     private buildUrl(query: string) {

@@ -1,8 +1,45 @@
 <template>
     <b-form @submit="onClickFind">
-        <b-form-group
-                label="Find Keyword"
-        >
+        <b-form-group label="Find Scope">
+            <b-form-radio-group class="select-scope-area"
+                                v-model="searchType">
+                <b-card-group>
+                    <b-card @click="() => this.searchType = 'all'"
+                            :class="{active: searchType === 'all', 'left-active': searchType === 'current-user'}">
+                        <b-form-radio value="all">
+                            All Repositories
+                        </b-form-radio>
+                    </b-card>
+
+                    <b-card v-if="pageContext.hasRepoOwnerName()"
+                            @click="() => this.searchType = 'current-user'"
+                            :class="{active: searchType === 'current-user', 'left-active': searchType === 'current-repo'}">
+                        <b-form-radio value="current-user">
+                            Current User
+                        </b-form-radio>
+                        <b-form-input :value="pageContext.getRepoOwnerName()" readonly disabled></b-form-input>
+                    </b-card>
+
+                    <b-card v-if="pageContext.hasRepoName()"
+                            @click="() => this.searchType = 'current-repo'"
+                            :class="{active: searchType === 'current-repo', 'left-active': searchType === 'my-repo'}">
+                        <b-form-radio value="current-repo">
+                            Current Repository
+                        </b-form-radio>
+                        <b-form-input :value="pageContext.getRepoName()" readonly disabled></b-form-input>
+                    </b-card>
+
+                    <b-card v-if="hasLoginName" @click="() => this.searchType = 'my-repo'" :class="{active: searchType === 'my-repo'}">
+                        <b-form-radio value="my-repo">
+                            My Repositories
+                        </b-form-radio>
+                        <b-form-input :value="loginName" readonly disabled></b-form-input>
+                    </b-card>
+                </b-card-group>
+            </b-form-radio-group>
+        </b-form-group>
+
+        <b-form-group label="Find Keyword">
             <b-form-input
                     id="input-formatter"
                     v-model="searchWord"
@@ -32,10 +69,20 @@
             this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
                 this.searchWord = this.pageContext.getSelectingText();
 
+                if (this.pageContext.hasRepoName()) {
+                    this.searchType = 'current-repo';
+                } else if (this.pageContext.hasRepoOwnerName()) {
+                    this.searchType = 'current-user';
+                } else {
+                    this.searchType = 'all';
+                }
+
                 setTimeout(() => {
                     this.$refs.searchWordInput.select();
                 }, 100);
             })
+
+            this.loginName = await this.pageContext.getLoginName();
         },
         props     : {
         },
@@ -43,6 +90,8 @@
             return {
                 GETTERS,
                 searchWord: '',
+                searchType: 'all',
+                loginName: null,
             }
         },
         computed  : {
@@ -52,10 +101,13 @@
             fileFindingInteractor() {
                 return container.resolve('FileFindingInteractor');
             },
+            hasLoginName() {
+                return this.loginName !== null;
+            }
         },
         methods   : {
             onClickFind() {
-                this.fileFindingInteractor.find(this.searchWord);
+                this.fileFindingInteractor.find(this.searchType, this.searchWord);
             },
         }
     }

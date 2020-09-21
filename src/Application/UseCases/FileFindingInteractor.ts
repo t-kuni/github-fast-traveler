@@ -1,43 +1,59 @@
 import {inject, injectable} from "tsyringe";
 import {PageContextDetector} from "../Services/PageContextDetector";
 import {IUrlRepository} from "../../Infrastructure/Repositories/interfaces/IUrlRepository";
-import {STATE} from "../state";
-import {ISearchFileNameRepository} from "../../Infrastructure/Repositories/interfaces/ISearchFileNameRepository";
 
 @injectable()
 export class FileFindingInteractor {
     private pageContext: PageContextDetector;
     private urlRepo: IUrlRepository;
-    private store: any;
-    private fileNameRepo: ISearchFileNameRepository;
 
     constructor(@inject('PageContextDetector') pageContext: PageContextDetector,
-                @inject('IUrlRepository') urlRepo: IUrlRepository,
-                @inject('ISearchFileNameRepository') fileNameRepo: ISearchFileNameRepository,
-                @inject('Store') store: any
-    ) {
-        this.store = store;
-        this.fileNameRepo = fileNameRepo;
+                @inject('IUrlRepository') urlRepo: IUrlRepository) {
         this.urlRepo = urlRepo;
         this.pageContext = pageContext;
     }
 
-    find(searchWord: string) {
-        if (!this.pageContext.hasRepoOwnerName() || !this.pageContext.hasRepoName()) {
-            return;
+    async find(searchType: string, searchWord: string): Promise<null> {
+        switch (searchType) {
+            case 'all':
+                this.urlRepo.save(this.buildUrlInAll(searchWord));
+                break;
+            case 'current-user':
+                this.urlRepo.save(this.buildUrlInCurrentUser(searchWord));
+                break;
+            case 'current-repo':
+                this.urlRepo.save(this.buildUrlInCurrentRepo(searchWord));
+                break;
+            case 'my-repo':
+                this.urlRepo.save(await this.buildUrlInMyRepo(searchWord));
+                break;
         }
+    }
 
-        if (searchWord.length > 0) {
-            this.fileNameRepo.save(searchWord);
-        } else {
-            this.fileNameRepo.clear();
-        }
+    private buildUrlInAll(word: string): string {
+        return this.buildUrl(word);
+    }
 
+    private buildUrlInCurrentUser(word: string) {
+        const user = this.pageContext.getRepoOwnerName();
+        const query = `in:path user:${user} ${word}`;
+        return this.buildUrl(query);
+    }
+
+    private buildUrlInCurrentRepo(word: string) {
         const user = this.pageContext.getRepoOwnerName();
         const repo = this.pageContext.getRepoName();
-        const branch = this.store.state[STATE.CURRENT_REPO_DETAIL].default_branch;
-        const url = `https://github.com/${user}/${repo}/find/${branch}`;
+        const query = `in:path repo:${user}/${repo} ${word}`;
+        return this.buildUrl(query);
+    }
 
-        this.urlRepo.save(url);
+    private async buildUrlInMyRepo(word: string): Promise<string> {
+        const user = await this.pageContext.getLoginName();
+        const query = `in:path user:${user} ${word}`;
+        return this.buildUrl(query);
+    }
+
+    private buildUrl(query: string) {
+        return 'https://github.com/search?q=' + query + '&type=Code';
     }
 }

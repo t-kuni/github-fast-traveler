@@ -12,6 +12,10 @@
                     <code-find-form></code-find-form>
                 </b-tab>
 
+                <b-tab title="Find File" active>
+                    <file-find-form></file-find-form>
+                </b-tab>
+
                 <b-tab title="Settings">
                     <h2>General</h2>
                     <user-name-form></user-name-form>
@@ -68,9 +72,10 @@
     import CodeFindForm from "./molecules/CodeFindForm";
     import UserNameForm from "./molecules/UserNameForm";
     import RepoAccessHistory from "./molecules/RepoAccessHistory";
+    import FileFindForm from "./molecules/FileFindForm";
 
     export default {
-        components: {RepoAccessHistory, UserNameForm, CodeFindForm, HotkeyInput},
+        components: {FileFindForm, RepoAccessHistory, UserNameForm, CodeFindForm, HotkeyInput},
         mounted() {
             (async () => {
                 const hotkeys       = await this.getHotkeys();
