@@ -37,6 +37,10 @@ chrome://extensions
 
 # Release Build
 
+1. increment a version number of `manifest.template.js`
+
+2. run a bellow command.
+
 ```
 npm run release
 ```
