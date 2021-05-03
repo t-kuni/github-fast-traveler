@@ -3,7 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = env => {
     return {
-        devtool: "", // FIXME 有効にするとembedded_script.jsが動作しなくなる 'unsafe-eval'にひっかかる
+        // devtool: "", // FIXME 有効にするとembedded_script.jsが動作しなくなる 'unsafe-eval'にひっかかる
         entry  : {
             popup          : './src/Application/popup.js',
             content_script : './src/Application/content_script.js',
@@ -17,7 +17,7 @@ module.exports = env => {
                 },
                 {
                     test  : /\.scss$/,
-                    loader: ['style-loader', 'css-loader', 'sass-loader']
+                    use: ['style-loader', 'css-loader', 'sass-loader']
                 },
                 {
                     test   : /\.tsx?$/,
