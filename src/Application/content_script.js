@@ -2,7 +2,7 @@ import '../setup_container';
 import {container} from "tsyringe";
 import {dispatchEvent, listenEvent} from "../events";
 import RepoAccessHistory from "../Domain/ValueObjects/RepoAccessHistory";
-import {EVENT} from './../events'
+import {EVENT} from './../events';
 
 //
 // Inject Embedded Script
@@ -26,7 +26,7 @@ if (pageContext.hasRepoOwnerName() && pageContext.hasRepoName()) {
 
 		const user = pageContext.getRepoOwnerName();
 		const repo = pageContext.getRepoName();
-        histories = histories.addHistory(new RepoAccessHistory(user, repo));
+		histories = histories.addHistory(new RepoAccessHistory(user, repo));
 
 		historyRepo.save(histories);
 	})();
@@ -63,8 +63,3 @@ listenEvent(EVENT.SET_STORAGE, (payload) => {
 		dispatchEvent(payload.listenerID, result);
 	});
 });
-
-function saveUserName()
-{
-
-}

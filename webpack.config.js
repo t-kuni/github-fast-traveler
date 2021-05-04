@@ -3,7 +3,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = env => {
     return {
-        // devtool: "", // FIXME 有効にするとembedded_script.jsが動作しなくなる 'unsafe-eval'にひっかかる
+        devtool: false, // FIXME 有効にするとembedded_script.jsが動作しなくなる 'unsafe-eval'にひっかかる
         entry  : {
             popup          : './src/Application/popup.js',
             content_script : './src/Application/content_script.js',

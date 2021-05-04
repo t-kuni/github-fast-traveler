@@ -3,13 +3,13 @@ const $ = require('jquery');
 
 export class DomAdapter implements IDomAdapter {
     getLoginUserName(): string | null {
-        const $user = $('.header-nav-current-user strong');
+        const userName = $('meta[name="user-login"]').attr('content');
 
-        if ($user.length === 0) {
+        if (!userName) {
             return null;
         }
 
-        return $user.text();
+        return userName;
     }
 
     getSelectingText(): string {
