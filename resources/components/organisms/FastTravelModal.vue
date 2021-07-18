@@ -8,6 +8,9 @@
                 <b-tab title="Find File">
                     <file-find-form ref="fileFindForm"></file-find-form>
                 </b-tab>
+                <b-tab title="Find Issue">
+                    <issue-find-form ref="issueFindForm"></issue-find-form>
+                </b-tab>
                 <b-tab title="Access Repo History">
                     <repo-access-history ref="repoAccessHistory"></repo-access-history>
                 </b-tab>
@@ -20,9 +23,10 @@
     import CodeFindForm from "../molecules/CodeFindForm";
     import RepoAccessHistory from "../molecules/RepoAccessHistory";
     import FileFindForm from "../molecules/FileFindForm";
+    import IssueFindForm from "../molecules/IssueFindForm";
 
     export default {
-        components: {FileFindForm, RepoAccessHistory, CodeFindForm},
+        components: {IssueFindForm, FileFindForm, RepoAccessHistory, CodeFindForm},
         mounted() {
             this.$root.$on('bv::modal::show', (bvEvent, modalId) => {
                 this.$refs.codeFindForm.onShow();

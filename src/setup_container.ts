@@ -6,6 +6,7 @@ import {DomAdapter} from "./Infrastructure/Adapters/DomAdapter";
 import {CodeFindingInteractor} from "./Application/UseCases/CodeFindingInteractor";
 import {PageContextDetector} from "./Application/Services/PageContextDetector";
 import {FileFindingInteractor} from "./Application/UseCases/FileFindingInteractor";
+import {IssueFindingInteractor} from "./Application/UseCases/IssueFindingInteractor";
 import {GithubApiAdapter} from "./Infrastructure/Adapters/GithubApiAdapter";
 import {AppInitializationInteractor} from "./Application/UseCases/AppInitializationInteractor";
 import {StateProvider} from "./Application/Services/StateProvider";
@@ -22,6 +23,7 @@ const isInTest = typeof global.it === 'function';
 // Application Layer
 container.register("CodeFindingInteractor", {useClass: CodeFindingInteractor});
 container.register("FileFindingInteractor", {useClass: FileFindingInteractor});
+container.register("IssueFindingInteractor", {useClass: IssueFindingInteractor});
 container.register("FileFindPageOpeningInteractor", {useClass: FileFindPageOpeningInteractor});
 container.register("PageContextDetector", {useClass: PageContextDetector});
 container.register("AppInitializationInteractor", {useClass: AppInitializationInteractor});
