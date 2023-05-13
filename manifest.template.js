@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const baseManifest = {
-  "manifest_version": 2,
+  "manifest_version": 3,
 
   "name": "Github Fast Traveler",
   "short_name": "github-fast-traveler",
