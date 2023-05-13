@@ -1,12 +1,12 @@
 const fs = require('fs');
 
 const baseManifest = {
-  "manifest_version": 3,
+  "manifest_version": 2,
 
   "name": "Github Fast Traveler",
   "short_name": "github-fast-traveler",
   "description": "This extension is provide contents search experience like IDE when you browse the Github.",
-  "version": "3.1.0",
+  "version": "4.1.0",
   "author": "t-kuni",
 
   "browser_action": {
