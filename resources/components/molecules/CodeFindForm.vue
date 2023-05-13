@@ -49,10 +49,10 @@
             ></b-form-input>
         </b-form-group>
 
-        <b-form-group label="Filter Extension">
+        <b-form-group label="Path">
             <b-form-input
-                    v-model="extension"
-                    placeholder="ex. css, js, html, php..."
+                    v-model="path"
+                    placeholder="ex. *.css, /src/**/*.js..."
                     @keydown.enter="onClickFind"
             ></b-form-input>
         </b-form-group>
@@ -94,7 +94,7 @@
                 searchWord: '',
                 searchType: 'all',
                 loginName: null,
-                extension: null,
+                path: null,
             }
         },
         computed  : {
@@ -110,7 +110,7 @@
         },
         methods   : {
             onClickFind() {
-                this.codeFindingInteractor.find(this.searchType, this.searchWord, this.extension);
+                this.codeFindingInteractor.find(this.searchType, this.searchWord, this.path);
             },
             onShow() {
                 setTimeout(() => {

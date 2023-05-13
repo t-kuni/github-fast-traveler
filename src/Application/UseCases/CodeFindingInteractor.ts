@@ -13,54 +13,54 @@ export class CodeFindingInteractor {
         this.pageContext = pageContext;
     }
 
-    async find(searchType: string, searchWord: string, extension: string): Promise<null> {
+    async find(searchType: string, searchWord: string, path: string): Promise<void> {
         switch (searchType) {
             case 'all':
-                this.urlRepo.save(this.buildUrlInAll(searchWord, extension));
+                this.urlRepo.save(this.buildUrlInAll(searchWord, path));
                 break;
             case 'current-user':
-                this.urlRepo.save(this.buildUrlInCurrentUser(searchWord, extension));
+                this.urlRepo.save(this.buildUrlInCurrentUser(searchWord, path));
                 break;
             case 'current-repo':
-                this.urlRepo.save(this.buildUrlInCurrentRepo(searchWord, extension));
+                this.urlRepo.save(this.buildUrlInCurrentRepo(searchWord, path));
                 break;
             case 'my-repo':
-                this.urlRepo.save(await this.buildUrlInMyRepo(searchWord, extension));
+                this.urlRepo.save(await this.buildUrlInMyRepo(searchWord, path));
                 break;
         }
     }
 
-    private buildUrlInAll(word:string, ext:string): string {
-        const query = this.buildExt(ext) + word;
+    private buildUrlInAll(word:string, path:string): string {
+        const query = this.buildPath(path) + word;
         return this.buildUrl(query);
     }
 
-    private buildUrlInCurrentUser(word:string, ext:string) {
+    private buildUrlInCurrentUser(word:string, path:string) {
         const user = this.pageContext.getRepoOwnerName();
-        const query = this.buildExt(ext) + `user:${user} ${word}`;
+        const query = this.buildPath(path) + `user:${user} ${word}`;
         return this.buildUrl(query);
     }
 
-    private buildUrlInCurrentRepo(word:string, ext:string) {
+    private buildUrlInCurrentRepo(word:string, path:string) {
         const user = this.pageContext.getRepoOwnerName();
         const repo = this.pageContext.getRepoName();
-        const query = this.buildExt(ext) + `repo:${user}/${repo} ${word}`;
+        const query = this.buildPath(path) + `repo:${user}/${repo} ${word}`;
         return this.buildUrl(query);
     }
 
-    private async buildUrlInMyRepo(word:string, ext:string): Promise<string> {
+    private async buildUrlInMyRepo(word:string, path:string): Promise<string> {
         const user = await this.pageContext.getLoginName();
-        const query = this.buildExt(ext) + `user:${user} ${word}`;
+        const query = this.buildPath(path) + `user:${user} ${word}`;
         return this.buildUrl(query);
     }
 
-    private buildExt(extension:string)
+    private buildPath(path:string)
     {
-        if (extension == null || extension == '') {
+        if (path == null || path == '') {
             return '';
         }
 
-        return `extension:${extension} `;
+        return `path:${path} `;
     }
 
     private buildUrl(query: string) {

@@ -2,11 +2,8 @@
     <div>
         <b-modal id="fast-travel-modal" :static="true" centered title="Fast Travel" size="lg" hide-footer>
             <b-tabs content-class="mt-3" @activate-tab="onActiveTab">
-                <b-tab title="Find Code" active>
+                <b-tab title="Find File & Code" active>
                     <code-find-form ref="codeFindForm"></code-find-form>
-                </b-tab>
-                <b-tab title="Find File">
-                    <file-find-form ref="fileFindForm"></file-find-form>
                 </b-tab>
                 <b-tab title="Find Issue">
                     <issue-find-form ref="issueFindForm"></issue-find-form>
